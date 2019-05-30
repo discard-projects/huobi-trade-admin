@@ -1,0 +1,30 @@
+@import "reset";
+@import "animations";
+/* 浮动开始 */
+.fl, .pull-left{
+  float: left;
+}
+.fr, .pull-right{
+  float: right;
+}
+.clearfix::before, .clearfix::after {
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.clearfix:after {clear: both;}
+.clearfix {clear: both;zoom: 1;}
+/* 浮动结束 */
+
+.full-page {
+  min-height: 100%;
+}
+
+.ex-table {
+  .el-table {
+    .el-button {
+      margin: 5px;
+    }
+  }
+}

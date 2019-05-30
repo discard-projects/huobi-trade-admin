@@ -1,0 +1,6 @@
+{
+  "entry": {
+    "loadingBar": "index.js"
+  },
+  "units": ["px", "rem"]
+}

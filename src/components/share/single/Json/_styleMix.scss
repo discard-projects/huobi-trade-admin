@@ -1,0 +1,16 @@
+@mixin ui-json {
+  ._ui-json {
+    //display: inline-block;\
+    margin: 5px;
+    padding: 5px;
+    line-height: 1.2;
+    border: 1px solid #f2f2f2;
+    overflow: hidden;
+
+    .pre-string { color: green; }
+    .pre-number { color: darkorange; }
+    .pre-boolean { color: blue; }
+    .pre-null { color: magenta; }
+    .pre-key { color: red; }
+  }
+}

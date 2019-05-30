@@ -1,0 +1,6 @@
+{
+  "entry": {
+    "json": "Json.vue"
+  },
+  "units": ["px", "rem"]
+}
