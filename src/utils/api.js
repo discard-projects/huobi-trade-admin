@@ -149,6 +149,8 @@ let api = {
   deleteOrder: (id) => cusAxios.delete(`v1/orders/${id}`),
   // balances
   getBalances (params) { return cusAxios.get('v1/balances', {params}) },
+  getBalance (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
+  updateBalance (id, data) { return cusAxios.put(`v1/balances/${id}`, data) },
   getBalancesTradeSymbols (id, params) { return cusAxios.get(`v1/balances/${id}/balance_trade_symbols`, {params}) },
 
   getCarouselFootprints: (id) => cusAxios.get(`carousels/${id}/footprints`),

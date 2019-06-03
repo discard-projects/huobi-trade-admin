@@ -17,7 +17,7 @@
         {{row.currency.toUpperCase()}}
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
-        <el-button size="mini" @click="getBalancesTradeSymbols(row)">获取</el-button>
+        <el-button size="mini" @click="showCustomPriceFormDialog(row)">获取</el-button>
         <el-button size="mini" @click="showEditDialog(row)">编辑</el-button>
       </template>
     </ex-table>
@@ -28,6 +28,7 @@
 import mixTableData from '@/mixins/mixTableData'
 import New from './New.vue'
 import Edit from './Edit.vue'
+import CustomPriceForm from './CustomPriceForm.vue'
 export default {
   mixins: [mixTableData],
   data () {
@@ -41,6 +42,9 @@ export default {
     },
     showNewDialog () {
       this.$ext.mount(New, {onEl: this.$el, data: {owner: this}})
+    },
+    showCustomPriceFormDialog (item) {
+      this.$ext.mount(CustomPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
     },
     fetchItemFootprints (item) {
       this.api.getCarouselFootprints(item.id).then(res => {
