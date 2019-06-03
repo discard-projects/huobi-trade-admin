@@ -24,7 +24,7 @@
           <el-table-column prop="cus_count" label="个数"></el-table-column>
           <el-table-column prop="enabled" label="enabled">
             <template slot-scope="scope">
-              <span>{{scope.row.enabled ? 'true' : ''}}</span>
+              <span>{{scope.row.cus_enabled ? 'true' : ''}}</span>
             </template>
           </el-table-column>
         </el-table>

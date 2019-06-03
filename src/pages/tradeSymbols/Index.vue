@@ -40,8 +40,8 @@
       this.mixTableData = Object.assign(this.mixTableData, {
         queryIntros: [{
           control: 'input',
-          key: 'q_name_cont',
-          placeholder: '名称'
+          key: 'q_base_currency_cont',
+          placeholder: 'base_currency'
         }],
         dataIntros: [{
           label: '#',
