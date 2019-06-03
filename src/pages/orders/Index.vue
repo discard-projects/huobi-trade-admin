@@ -1,14 +1,32 @@
 <template>
   <div>
-    <ex-table :tableData="mixTableData" @refetch="fetchData">
+    <ex-table :tableData="mixTableData" @refetch="fetchData" tableType="expand">
       <template slot="search-bar-item" slot-scope="{search}">
         <el-form-item :label="search.label" :key="search.key">
-          <ex-options-select v-model="mixTableData.query[search.key]" :options="statusOptions" clearable></ex-options-select>
+          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: 'app内交易', value: 'kind_app'}, {label: '自动下单', value: 'kind_auto'}, {label: '自定义价格', value: 'kind_custom_price'}]"></ex-options-select>
         </el-form-item>
       </template>
       <div slot="search-bar-operations">
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
+
+      <!--折叠table-->
+      <template slot="expand" slot-scope="{row, $index, intro}">
+        <el-table :data="row.children" style="width: 100%">
+          <el-table-column prop="id" label="#"></el-table-column>
+          <el-table-column prop="state" label="state">
+            <template slot-scope="{row}">
+              <ex-status-tag :status="`${row.status}`" danger="0">{{row.status ? '通过' : '不通过'}}</ex-status-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="amount" label="数量"></el-table-column>
+          <el-table-column prop="price" label="价格"></el-table-column>
+          <el-table-column prop="field_amount" label="成交量"></el-table-column>
+          <el-table-column prop="field_cash_amount" label="已成交金额"></el-table-column>
+          <el-table-column prop="field_fees" label="已成交手续费"></el-table-column>
+        </el-table>
+      </template>
+
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
         <el-button type="text" @click="showDetailDialog(row)">{{row.id}}</el-button>
@@ -85,11 +103,18 @@
           control: 'input',
           key: 'symbol',
           placeholder: 'symbol'
+        }, {
+          control: 'custom',
+          key: 'q_kind_eq',
+          placeholder: '交易种类'
         }],
         dataIntros: [{
           label: '#',
           key: 'id',
           width: 100
+        }, {
+          label: '交易种类',
+          key: 'kind'
         }, {
           label: '币种',
           key: 'symbol',
