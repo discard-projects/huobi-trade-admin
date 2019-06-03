@@ -7,7 +7,7 @@ import Layout from '@/components/views/Layout/Index'
 Vue.use(Router)
 
 Vue.router = new Router({
-  routes: [{ path: '', component: Layout, redirect: 'dashboard', children: [
+  routes: [{ path: '', component: Layout, redirect: 'orders', children: [
     {
       path: 'dashboard', name: 'Dashboard', meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }, component: (resolve) => { require(['@/pages/dashboard/Index'], resolve) },
     }, {
@@ -23,7 +23,7 @@ Vue.router = new Router({
     }, {
       path: 'orders', name: 'Orders', meta: { title: 'Orders', icon: 'orders' }, component: (resolve) => { require(['@/pages/orders/Index'], resolve) },
     }, {
-      path: 'carousels', name: 'Carousels', meta: { title: 'Carousels', icon: 'carousels' }, component: (resolve) => { require(['@/pages/carousels/Index'], resolve) },
+      path: 'balances', name: 'Balances', meta: { title: 'Balances', icon: 'balances' }, component: (resolve) => { require(['@/pages/balances/Index'], resolve) },
     }, {
       path: 'feedbacks', name: 'Feedbacks', meta: { title: 'Feedbacks', icon: 'feedbacks' }, component: (resolve) => { require(['@/pages/feedbacks/Index'], resolve) },
     }, {
@@ -37,7 +37,9 @@ Vue.router = new Router({
       ]
     }]
   }, {
-    path: '/login', name: 'Login', meta: { title: 'Login', noCache: true }, component: (resolve) => { require(['@/components/views/Login/Index'], resolve) },
+    path: '/login', name: 'Login', meta: { title: 'Login', noCache: true }, component: (resolve) => { require(['@/components/views/Login/Index'], resolve) }
+  }, {
+    path: '/register', name: 'Register', meta: { title: 'Register', noCache: true }, component: (resolve) => { require(['@/components/views/Login/Register'], resolve) }
   }]
 })
 export default Vue.router

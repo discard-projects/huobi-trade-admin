@@ -7,7 +7,7 @@ Vue.use(UiLoadingBar)
 let loadingBar = UiLoadingBar.new()
 const cusAxios = axios.create({
   baseURL: process.env.API_HOST,
-  timeout: 15000
+  timeout: 60 * 1000
 })
 // cusAxios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // Add a request interceptor
@@ -52,13 +52,15 @@ Vue.use(VueAuth, {
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
   authType: 'devise',
-  loginData: { url: process.env.API_HOST + '/admin_auth/sign_in', method: 'POST', redirect: '/' },
-  logoutData: { url: process.env.API_HOST + '/admin_auth/sign_out', method: 'DELETE', redirect: '/login' },
-  refreshData: { url: process.env.API_HOST + '/admin_auth/validate_token', method: 'GET', enabled: true, interval: 30, atInit: true },
-  fetchData: { url: process.env.API_HOST + '/admin_auth/validate_token', method: 'GET', enabled: true }
+  loginData: { url: process.env.API_HOST + '/auth/sign_in', method: 'POST', redirect: '/' },
+  logoutData: { url: process.env.API_HOST + '/auth/sign_out', method: 'DELETE', redirect: '/login' },
+  refreshData: { url: process.env.API_HOST + '/auth/validate_token', method: 'GET', enabled: true, interval: 30, atInit: true },
+  fetchData: { url: process.env.API_HOST + '/auth/validate_token', method: 'GET', enabled: true }
 })
 
 let api = {
+  // 注册用户
+  createUser (data) { return cusAxios.post(`v1/user`, data) },
   // dic areas
   getDicAreas (params) { return cusAxios.get('dic/areas', {params}) },
   getDicArea (id, params) { return cusAxios.get(`dic/areas/${id}`, {params}) },
@@ -138,15 +140,16 @@ let api = {
   createServicePerson (data) { return cusAxios.post(`service_people`, data) },
   deleteServicePerson: (id) => cusAxios.delete(`service_people/${id}`),
   // orders
-  getOrders (params) { return cusAxios.get('orders', {params}) },
-  getOrderFootprints: (id) => cusAxios.get(`orders/${id}/footprints`),
-  getOrder (id, params) { return cusAxios.get(`orders/${id}`, {params}) },
-  updateOrder (id, data) { return cusAxios.put(`orders/${id}`, data) },
-  updateOrderStatus: (orderId, status) => cusAxios.put(`orders/${orderId}/change_status`, {status}),
-  createOrder (data) { return cusAxios.post(`orders`, data) },
-  deleteOrder: (id) => cusAxios.delete(`orders/${id}`),
-  // carousels
-  getCarousels (params) { return cusAxios.get('carousels', {params}) },
+  getOrders (params) { return cusAxios.get('v1/orders', {params}) },
+  getOrderFootprints: (id) => cusAxios.get(`v1/orders/${id}/footprints`),
+  getOrder (id, params) { return cusAxios.get(`v1/orders/${id}`, {params}) },
+  updateOrder (id, data) { return cusAxios.put(`v1/orders/${id}`, data) },
+  updateOrderStatus: (orderId, status) => cusAxios.put(`v1/orders/${orderId}/change_status`, {status}),
+  createOrder (data) { return cusAxios.post(`v1/orders`, data) },
+  deleteOrder: (id) => cusAxios.delete(`v1/orders/${id}`),
+  // balances
+  getBalances (params) { return cusAxios.get('v1/balances', {params}) },
+
   getCarouselFootprints: (id) => cusAxios.get(`carousels/${id}/footprints`),
   getCarousel (id, params) { return cusAxios.get(`carousels/${id}`, {params}) },
   updateCarousel (id, data) { return cusAxios.put(`carousels/${id}`, data) },

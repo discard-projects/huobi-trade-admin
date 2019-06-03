@@ -24,11 +24,13 @@ export default {
       form: {
         email: 'swfeiyang@gmail.com',
         password: 'mars1234',
+        // email: '',
+        // password: '',
         remember_me: true
       },
       rules: {
         email: [
-          { required: true, message: '请输入邮箱地址', trigger: 'change,blur' }
+          { required: true, message: '请输入邮箱地址', trigger: 'change, blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
@@ -41,7 +43,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$auth.login({data: this.form, rememberMe: false}).then(({data}) => {
-            console.log('1', data)
           })
         }
       })
@@ -82,6 +83,7 @@ export default {
 
       .login-btn{
         text-align: center;
+        margin-top: 45px;
       }
       .login-btn button{
         width:100%;
