@@ -22,10 +22,8 @@ export default {
   data () {
     return {
       form: {
-        email: 'swfeiyang@gmail.com',
-        password: 'mars1234',
-        // email: '',
-        // password: '',
+        email: '',
+        password: '',
         remember_me: true
       },
       rules: {
