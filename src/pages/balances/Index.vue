@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ex-table :tableData="mixTableData" @refetch="fetchData">
+    <ex-table :tableData="mixTableData" @refetch="fetchData" tableType="expand">
       <template slot="search-bar-item" slot-scope="{search}">
         <el-form-item :label="search.label" :key="search.key">
           <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: '全部', value: ''}, {label: '已设置手动下单', value: true}, {label: '未设置手动下单', value: false}]"></ex-options-select>
@@ -10,6 +10,26 @@
         <el-button size="small" @click="showNewDialog">新增</el-button>
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
+      <!--折叠table-->
+      <template slot="expand" slot-scope="{row, $index, intro}">
+        <el-table :data="row.balance_trade_symbols" style="width: 100%">
+          <el-table-column prop="id" label="#"></el-table-column>
+          <el-table-column prop="trade_symbol" label="trade_symbol" width="250">
+            <template slot-scope="{row}">
+              <ui-json :json="row.trade_symbol" style="width: 220px"></ui-json>
+            </template>
+          </el-table-column>
+          <el-table-column prop="cus_buy_price" label="购买价格"></el-table-column>
+          <el-table-column prop="cus_sell_price" label="卖出价格"></el-table-column>
+          <el-table-column prop="cus_count" label="个数"></el-table-column>
+          <el-table-column prop="enabled" label="enabled">
+            <template slot-scope="scope">
+              <span>{{scope.row.enabled ? 'true' : ''}}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </template>
+
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)">{{row.id}}</el-button>
       </template>
@@ -75,14 +95,14 @@ export default {
         default: '',
         placeholder: '自选'
       }],
-      dragable: (item, newPosition, oldPosition) => {
-        this.api.updateCarouselPosition(item.id, {position: newPosition}).then(res => {
-          this.fetchData()
-        }).catch(err => {
-          console.error(err)
-          this.fetchData()
-        })
-      },
+      // dragable: (item, newPosition, oldPosition) => {
+      //   this.api.updateCarouselPosition(item.id, {position: newPosition}).then(res => {
+      //     this.fetchData()
+      //   }).catch(err => {
+      //     console.error(err)
+      //     this.fetchData()
+      //   })
+      // },
       dataIntros: [{
         label: '#',
         key: 'id',
@@ -90,6 +110,11 @@ export default {
       }, {
         label: '目标币种',
         key: 'currency'
+      }, {
+        label: '已设定交易货币',
+        valueHandler (key, row, index) {
+          return row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency).join(', ')
+        }
       }, {
         label: '冻结',
         key: 'frozen_balance',
