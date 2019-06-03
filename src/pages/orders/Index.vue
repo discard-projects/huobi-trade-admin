@@ -93,10 +93,11 @@
         dataIntros: [{
           label: '#',
           key: 'id',
-          width: 150
+          width: 200
         }, {
           label: '交易种类',
-          key: 'kind'
+          key: 'kind',
+          width: 140
         }, {
           label: '币种',
           key: 'symbol',
@@ -105,6 +106,10 @@
           label: '买入/卖出',
           key: 'ctype',
           width: 80
+        }, {
+          label: '状态',
+          key: 'status',
+          width: 120
         }, {
           label: '状态',
           key: 'state',
