@@ -17,8 +17,8 @@
         {{row.currency.toUpperCase()}}
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
+        <el-button size="mini" @click="getBalancesTradeSymbols(row)">获取</el-button>
         <el-button size="mini" @click="showEditDialog(row)">编辑</el-button>
-        <el-button size="mini" type="danger" :loading="row['deleting']" @click="destroy(row)">删除</el-button>
       </template>
     </ex-table>
   </div>
@@ -47,28 +47,13 @@ export default {
         this.footprints = res.data.items
       })
     },
+    getBalancesTradeSymbols (item) {
+      this.api.getBalancesTradeSymbols(item.id).then(res => {
+        this.footprints = res.data.items
+      })
+    },
     showEditDialog (item) {
       this.$ext.mount(Edit, {onEl: this.$el, props: {item}, data: {owner: this}})
-    },
-    destroy (row) {
-      this.$confirm('确定要删除该条信息吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        callback: action => {
-          if (action === 'confirm') {
-            this.$set(row, 'deleting', true)
-            this.api.deleteCarousel(row.id).then(res => {
-              this.$set(row, 'deleting', false)
-              this.$message.success('删除成功了！')
-              this.fetchData()
-            }).catch(err => {
-              console.error(err)
-              this.$message.error('删除报错了！')
-              this.$set(row, 'deleting', false)
-            })
-          }
-        }
-      })
     },
     updatePosition (item, newPosition) {
       console.log(item, newPosition)

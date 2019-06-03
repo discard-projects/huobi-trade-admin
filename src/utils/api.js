@@ -149,6 +149,7 @@ let api = {
   deleteOrder: (id) => cusAxios.delete(`v1/orders/${id}`),
   // balances
   getBalances (params) { return cusAxios.get('v1/balances', {params}) },
+  getBalancesTradeSymbols (id, params) { return cusAxios.get(`v1/balances/${id}/balance_trade_symbols`, {params}) },
 
   getCarouselFootprints: (id) => cusAxios.get(`carousels/${id}/footprints`),
   getCarousel (id, params) { return cusAxios.get(`carousels/${id}`, {params}) },
@@ -171,8 +172,9 @@ let api = {
   updatePermission (id, data) { return cusAxios.put(`permissions/${id}`, data) },
   createPermission (data) { return cusAxios.post(`permissions`, data) },
   deletePermission: (id) => cusAxios.delete(`permissions/${id}`),
-  // feedbacks
-  getFeedbacks (params) { return cusAxios.get('feedbacks', {params}) },
+  // TradeSymbols
+  getTradeSymbols (params) { return cusAxios.get('v1/trade_symbols', {params}) },
+  updateTradeSymbols (id, data) { return cusAxios.put(`v1/trade_symbols/${id}/toggle_switch`, data) },
   // Upload Image
   uploadImage (fd) { return cusAxios.post('uploader/image', fd) }
 }

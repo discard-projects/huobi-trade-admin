@@ -25,7 +25,7 @@ Vue.router = new Router({
     }, {
       path: 'balances', name: 'Balances', meta: { title: 'Balances', icon: 'balances' }, component: (resolve) => { require(['@/pages/balances/Index'], resolve) },
     }, {
-      path: 'feedbacks', name: 'Feedbacks', meta: { title: 'Feedbacks', icon: 'feedbacks' }, component: (resolve) => { require(['@/pages/feedbacks/Index'], resolve) },
+      path: 'tradeSymbols', name: 'TradeSymbols', meta: { title: 'TradeSymbols', icon: 'tradeSymbols' }, component: (resolve) => { require(['@/pages/tradeSymbols/Index'], resolve) },
     }, {
       path: 'dic', name: 'Dic', meta: {title: 'Dic'}, component: (resolve) => { require(['@/pages/dic/Index'], resolve) }, children: [
         { path: 'areas', name: 'DicAreas', meta: {title: 'Areas'}, component: (resolve) => { require(['@/pages/dic/areas/Index'], resolve) } },

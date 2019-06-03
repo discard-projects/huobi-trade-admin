@@ -4,10 +4,10 @@
     <div class="login">
       <el-form :model="form" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
         <el-form-item prop="email">
-          <el-input v-model="form.email" placeholder="邮箱"></el-input>
+          <el-input v-model="form.email" placeholder="邮箱" clearable></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="密码" v-model="form.password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+          <el-input type="password" placeholder="密码" v-model="form.password" @keyup.enter.native="submitForm('ruleForm')" clearable></el-input>
         </el-form-item>
         <div class="login-btn">
           <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
