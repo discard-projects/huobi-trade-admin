@@ -37,8 +37,8 @@
         {{row.currency.toUpperCase()}}
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
-        <el-button size="mini" @click="showCustomPriceFormDialog(row)">获取</el-button>
-        <el-button size="mini" @click="showEditDialog(row)">编辑</el-button>
+        <el-button size="mini" @click="showCustomPriceFormDialog(row)">设置自动交易</el-button>
+        <!--<el-button size="mini" @click="showEditDialog(row)">编辑</el-button>-->
       </template>
     </ex-table>
   </div>
