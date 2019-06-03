@@ -13,9 +13,9 @@
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
         <el-button type="text" @click="showDetailDialog(row)">{{row.id}}</el-button>
       </template>
-      <template slot="status" slot-scope="{row}">
-        <ex-status-tag :status="`${row.status}`" danger="0">{{row.status ? '通过' : '不通过'}}</ex-status-tag>
-      </template>
+      <!--<template slot="status" slot-scope="{row}">-->
+        <!--<ex-status-tag :status="`${row.status}`" danger="0">{{row.status ? '通过' : '不通过'}}</ex-status-tag>-->
+      <!--</template>-->
       <template slot="symbol" slot-scope="{row}">
         <!--{{row.symbol.toUpperCase()}}-->
         {{row.symbol_base_currency.toUpperCase()}} / {{row.symbol_quote_currency.toUpperCase()}}
@@ -93,7 +93,7 @@
         dataIntros: [{
           label: '#',
           key: 'id',
-          width: 200
+          width: 130
         }, {
           label: '交易种类',
           key: 'kind',
@@ -107,11 +107,11 @@
           key: 'ctype',
           width: 80
         }, {
-          label: '状态',
+          label: '交易状态',
           key: 'status',
           width: 120
         }, {
-          label: '状态',
+          label: '三方交易状态',
           key: 'state',
           width: 120
         }, {
