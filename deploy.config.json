@@ -1,0 +1,23 @@
+{
+  "default": {
+    "deployTo": "/mnt/www/huobi/huobi_admin",
+    "repositoryUrl": "https://github.com/liuxy0551/huobi-trade-admin",
+    "keepReleases": 10,
+    "archive": {
+      "rootDir": "dist",
+      "only": ["*"]
+    },
+    "shared": {
+      "dirs": ["node_modules"],
+      "files": []
+    },
+    "buildCommands": ["cnpm install", "cnpm run build"]
+  },
+  "staging": {
+    "servers": [{
+      "host": "39.104.121.122",
+      "username": "deploy"
+    }],
+    "branch": "master"
+  }
+}
