@@ -79,7 +79,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.api.createUser(this.form).then(({data}) => {
-            this.$router.push({ name: 'register' })
+            this.$router.push({ name: 'Login' })
           })
         }
       })
