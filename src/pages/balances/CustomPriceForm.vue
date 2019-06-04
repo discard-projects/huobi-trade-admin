@@ -24,7 +24,10 @@
       <el-form :inline="true" :model="form" class="demo-form-inline">
         <el-card v-for="(balaceTradeSymbol,index) in form.balance_trade_symbols" :key="index">
           <div slot="header" class="clearfix">
-            <span>{{balaceTradeSymbol.trade_symbol_base_currency}} / {{balaceTradeSymbol.trade_symbol_quote_currency}}</span>
+            <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency}} / {{balaceTradeSymbol.trade_symbol_quote_currency}}</span>
+            <el-input class="fr" v-model="balaceTradeSymbol.rate" style="width: 200px">
+              <template slot="append">%</template>
+            </el-input>
           </div>
           <el-form-item label="买入价格">
             <el-input v-model="balaceTradeSymbol.cus_buy_price" placeholder="自定义购买价格"></el-input>
@@ -58,11 +61,24 @@
       }
     },
     methods: {
-      fetchData () {
-        return this._fetchData(this.api.getBalance(this.item.id))
+      balanceTradeSymbolAddRate (obj) {
+        Object.defineProperty(obj, 'rate', {
+          get () {
+            return this.cus_buy_price ? this.cus_sell_price / this.cus_buy_price * 100 : ''
+          },
+          set (nv) {
+            if (+nv == nv) {
+              this.cus_sell_price = this.cus_buy_price * nv / 100
+            }
+          }
+        })
       },
-      handler () {
-        return this._handler(this.api.updateCarousel(this.item.id, this.form))
+      fetchData () {
+        this._fetchData(this.api.getBalance(this.item.id)).then(res => {
+          this.form.balance_trade_symbols.forEach(obj => {
+            this.balanceTradeSymbolAddRate(obj)
+          })
+        })
       },
       fetchAllowTradeSymbol () {
         this.api.getTradeSymbols({q_base_currency_eq: this.item.currency}).then(res => {
@@ -70,7 +86,9 @@
         })
       },
       addTradeSymbol (tradeSymbol) {
-        this.form.balance_trade_symbols.push({balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, cus_buy_price: 0, cus_sell_price: 0, cus_count: 0, cus_enabled: false})
+        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, cus_buy_price: 0, cus_sell_price: 0, cus_count: 0, cus_enabled: false, trade_symbol_base_currency: tradeSymbol.trade_symbol_base_currency, balance_trade_symbols: tradeSymbol.balance_trade_symbols}
+        this.balanceTradeSymbolAddRate(obj)
+        this.form.balance_trade_symbols.push(obj)
       },
       onSubmit () {
         return this._handler(this.api.updateBalance(this.item.id, this.form))
