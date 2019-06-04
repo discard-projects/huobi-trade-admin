@@ -86,7 +86,7 @@
         })
       },
       addTradeSymbol (tradeSymbol) {
-        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, cus_buy_price: 0, cus_sell_price: 0, cus_count: 0, cus_enabled: false, trade_symbol_base_currency: tradeSymbol.trade_symbol_base_currency, balance_trade_symbols: tradeSymbol.balance_trade_symbols}
+        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, cus_buy_price: 0, cus_sell_price: 0, cus_count: 0, cus_enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
         this.balanceTradeSymbolAddRate(obj)
         this.form.balance_trade_symbols.push(obj)
       },
