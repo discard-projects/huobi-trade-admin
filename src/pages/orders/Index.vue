@@ -13,9 +13,6 @@
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
         <el-button type="text" @click="showDetailDialog(row)">{{row.id}}</el-button>
       </template>
-      <!--<template slot="status" slot-scope="{row}">-->
-        <!--<ex-status-tag :status="`${row.status}`" danger="0">{{row.status ? '通过' : '不通过'}}</ex-status-tag>-->
-      <!--</template>-->
       <template slot="symbol" slot-scope="{row}">
         <!--{{row.symbol.toUpperCase()}}-->
         {{row.symbol_base_currency.toUpperCase()}} / {{row.symbol_quote_currency.toUpperCase()}}
@@ -24,12 +21,19 @@
         <ex-status-tag type="success" v-if="row.ctype == 'buy-limit'">买入</ex-status-tag>
         <ex-status-tag type="danger" v-if="row.ctype == 'sell-limit'">卖出</ex-status-tag>
       </template>
+      <template slot="status" slot-scope="{row}">
+        <ex-status-tag v-if="row.status == 'status_created'">已提交</ex-status-tag>
+        <ex-status-tag type="warning" v-if="row.status == 'status_filled'">已成交</ex-status-tag>
+        <ex-status-tag type="success" v-if="row.status == 'status_finished'">完成买卖</ex-status-tag>
+        <ex-status-tag type="info" v-if="row.status == 'status_untracked'">停止追踪</ex-status-tag>
+        <ex-status-tag type="danger" v-if="row.status == 'status_canceled'">已取消</ex-status-tag>
+      </template>
       <template slot="state" slot-scope="{row}">
-        <ex-status-tag type="success" v-if="row.state == 'submitted'">已提交</ex-status-tag>
+        <ex-status-tag type="info" v-if="row.state == 'submitted'">已提交</ex-status-tag>
         <ex-status-tag type="info" v-else-if="row.state == 'partial-filled'">部分成交</ex-status-tag>
         <ex-status-tag type="info" v-else-if="row.state == 'partial-canceled'">部分成交撤销</ex-status-tag>
-        <ex-status-tag type="success" v-else-if="row.state == 'filled'">完全成交</ex-status-tag>
-        <ex-status-tag type="warning" v-else-if="row.state == 'canceled'">已撤销</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.state == 'filled'">完全成交</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.state == 'canceled'">已撤销</ex-status-tag>
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-button style="margin: 5px" size="mini" @click="showEditDialog(row)">撤单</el-button>
