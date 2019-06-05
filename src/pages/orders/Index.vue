@@ -115,7 +115,7 @@
         dataIntros: [{
           label: '#',
           key: 'id',
-          width: 110
+          width: 120
         }, {
           label: '交易种类',
           key: 'kind',
