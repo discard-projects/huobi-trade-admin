@@ -36,7 +36,8 @@
         <ex-status-tag type="info" v-else-if="row.state == 'canceled'">已撤销</ex-status-tag>
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
-        <el-button style="margin: 5px" size="mini" @click="showEditDialog(row)">撤单</el-button>
+        <el-button v-if="row.kind === 'kind_custom_price' && ['status_filled'].indexOf(row.status) !== -1 && row.category === 'category_buy'" style="margin: 5px" size="mini" @click="stopTrack(row, 'status_untracked')">停止追踪卖出</el-button>
+        <!--<el-button style="margin: 5px" size="mini" @click="showEditDialog(row)">撤单</el-button>-->
       </template>
     </ex-table>
   </div>
@@ -70,6 +71,19 @@
       },
       showDetailDialog (item) {
         this.$ext.mount(Show, {onEl: this.$el, props: {item}, data: {owner: this}})
+      },
+      stopTrack (item, status) {
+        this.$confirm('停止追踪将会把设定价格交易关闭，需要手动打开，请确认？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          callback: action => {
+            if (action === 'confirm') {
+              this.api.updateOrderStatus(item.id, status).then(res => {
+                item.status = status
+              })
+            }
+          }
+        })
       },
       updateOrderStatus (order, status) {
         this.$confirm('确定更改吗？', '提示', {
@@ -142,11 +156,11 @@
           label: '更新时间',
           key: 'updated_time',
           width: 140
-        }]/*,
-      opIntro: {
-        label: '操作',
-        width: 200
-      }*/
+        }],
+        opIntro: {
+          label: '操作',
+          width: 150
+        }
       })
     }
   }

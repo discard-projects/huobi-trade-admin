@@ -18,6 +18,9 @@
         <el-form-item prop="secret_key">
           <el-input v-model="form.secret_key" placeholder="请输入 secret_key"></el-input>
         </el-form-item>
+        <el-form-item prop="slack_webhook_url">
+          <el-input v-model="form.secret_key" placeholder="请输入 slack_webhook_url"></el-input>
+        </el-form-item>
         <div class="register-btn">
           <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
         </div>
