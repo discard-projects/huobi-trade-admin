@@ -15,8 +15,8 @@
       </template>
       <template slot="kind" slot-scope="{row}">
         <ex-status-tag type="info" v-if="row.kind == 'kind_app'">APP下单</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.kind == 'kind_custom_price'">接口下单</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>
+        <ex-status-tag v-else-if="row.kind == 'kind_custom_price'">接口下单</ex-status-tag>
+        <ex-status-tag type="success" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>
       </template>
       <template slot="symbol" slot-scope="{row}">
         {{row.symbol_base_currency.toUpperCase()}} / {{row.symbol_quote_currency.toUpperCase()}}
