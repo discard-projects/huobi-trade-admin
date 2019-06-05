@@ -25,7 +25,7 @@
         <el-card v-for="(balaceTradeSymbol,index) in form.balance_trade_symbols" :key="index">
           <div slot="header" class="clearfix">
             <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency}} / {{balaceTradeSymbol.trade_symbol_quote_currency}}</span>
-            <el-input class="fr" v-model="balaceTradeSymbol.rate" style="width: 200px">
+            <el-input class="fr" v-model="balaceTradeSymbol.rate" style="width: 200px" disabled>
               <template slot="append">%</template>
             </el-input>
           </div>
@@ -76,7 +76,9 @@
       fetchData () {
         this._fetchData(this.api.getBalance(this.item.id)).then(res => {
           this.form.balance_trade_symbols.forEach(obj => {
-            this.balanceTradeSymbolAddRate(obj)
+            this.$nextTick(() => {
+              this.balanceTradeSymbolAddRate(obj)
+            })
           })
         })
       },

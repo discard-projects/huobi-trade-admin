@@ -13,8 +13,12 @@
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
         <el-button type="text" @click="showDetailDialog(row)">{{row.id}}</el-button>
       </template>
+      <template slot="kind" slot-scope="{row}">
+        <ex-status-tag type="info" v-if="row.kind == 'kind_app'">APP下单</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.kind == 'kind_custom_price'">接口下单</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>
+      </template>
       <template slot="symbol" slot-scope="{row}">
-        <!--{{row.symbol.toUpperCase()}}-->
         {{row.symbol_base_currency.toUpperCase()}} / {{row.symbol_quote_currency.toUpperCase()}}
       </template>
       <template slot="ctype" slot-scope="{row}">
@@ -111,11 +115,11 @@
         dataIntros: [{
           label: '#',
           key: 'id',
-          width: 130
+          width: 110
         }, {
           label: '交易种类',
           key: 'kind',
-          width: 140
+          width: 90
         }, {
           label: '币种',
           key: 'symbol',
@@ -127,11 +131,11 @@
         }, {
           label: '交易状态',
           key: 'status',
-          width: 120
+          width: 100
         }, {
           label: '三方交易状态',
           key: 'state',
-          width: 120
+          width: 110
         }, {
           label: '数量',
           key: 'amount'
@@ -150,16 +154,16 @@
           width: 100
         }, {
           label: '创建时间',
-          key: 'created_time',
+          key: 'create_time',
           width: 140
         }, {
-          label: '更新时间',
-          key: 'updated_time',
+          label: '交易完成时间',
+          key: 'finish_time',
           width: 140
         }],
         opIntro: {
           label: '操作',
-          width: 150
+          width: 130
         }
       })
     }

@@ -5,9 +5,12 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  export default {
+    name: 'App',
+    created () {
+      console.log('v6.05.1')
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
