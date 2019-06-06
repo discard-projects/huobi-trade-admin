@@ -94,7 +94,7 @@ export default {
       }, {
         label: '已设定交易货币',
         valueHandler (key, row, index) {
-          return row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')
+          return row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(',')
         }
       }, {
         label: '冻结',
