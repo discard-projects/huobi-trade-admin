@@ -39,6 +39,9 @@
         <ex-status-tag type="info" v-else-if="row.state == 'filled'">完全成交</ex-status-tag>
         <ex-status-tag type="info" v-else-if="row.state == 'canceled'">已撤销</ex-status-tag>
       </template>
+      <template slot="finish_time" slot-scope="{row}">
+        {{row.finish_time.match('1970') ? '' : row.finish_time}}
+      </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-button v-if="row.kind === 'kind_custom_price' && ['status_filled'].indexOf(row.status) !== -1 && row.category === 'category_buy'" style="margin: 5px" size="mini" @click="stopTrack(row, 'status_untracked')">停止追踪卖出</el-button>
         <!--<el-button style="margin: 5px" size="mini" @click="showEditDialog(row)">撤单</el-button>-->
@@ -105,7 +108,7 @@
       this.mixTableData = Object.assign(this.mixTableData, {
         queryIntros: [{
           control: 'input',
-          key: 'symbol',
+          key: 'q_symbol_cont',
           placeholder: 'symbol'
         }, {
           control: 'custom',

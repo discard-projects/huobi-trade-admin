@@ -2,7 +2,7 @@
   <el-menu class="menu" :class="{opened: sidebar.opened}" :collapse-transition="false" :default-active="$route.meta && $route.meta.groupName || $route.name" :collapse="!sidebar.opened" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" mode="vertical">
     <template v-for="(route, index) in routes">
       <template v-if="route.children">
-        <el-submenu :index="route.name" :key="route.name">
+        <el-submenu :index="route.name" :key="route.name" v-if="false">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span slot="title">{{ route.name }}</span>
@@ -18,7 +18,7 @@
         </el-submenu>
       </template>
       <template v-else>
-        <router-link :to="{name: route.name}" :key="index">
+        <router-link :to="{name: route.name}" :key="index" v-if="['Orders', 'Balances', 'TradeSymbols'].indexOf(route.name) != -1">
           <el-menu-item :index="route.name">
             <i class="el-icon-menu"></i>
             <span slot="title">{{route.meta.title}}</span>

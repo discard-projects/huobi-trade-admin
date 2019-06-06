@@ -1,20 +1,23 @@
 <template>
   <el-dialog title="自定义价格" :visible.sync="dialogVisible" width="80%">
-    <div>
+    <div style="margin: -30px 0 20px">
       <h3>可纳入</h3>
       <el-table :data="allowTradeSymbols" style="width: 100%">
         <el-table-column prop="id" label="#"></el-table-column>
-        <el-table-column prop="base_currency" label="base_currency"></el-table-column>
-        <el-table-column prop="quote_currency" label="quote_currency"></el-table-column>
-        <el-table-column prop="symbol" label="symbol"></el-table-column>
-        <el-table-column prop="enabled" label="enabled">
+        <el-table-column prop="symbol" label="交易对">
+          <template slot-scope="{row}">
+            {{row.base_currency.toUpperCase()}} / {{row.quote_currency.toUpperCase()}}
+          </template>
+        </el-table-column>
+        <el-table-column prop="enabled" label="开启状态">
           <template slot-scope="scope">
-            <span>{{scope.row.enabled ? 'true' : ''}}</span>
+            <ex-status-tag type="success" v-if="scope.row.enabled">已开启</ex-status-tag>
+            <ex-status-tag type="info" v-else>已关闭</ex-status-tag>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="{row}">
-            <el-button type="text" size="small" :disabled="!row.enabled || form.balance_trade_symbols && form.balance_trade_symbols.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>
+            <el-button size="small" type="primary" :disabled="!row.enabled || form.balance_trade_symbols && form.balance_trade_symbols.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -22,12 +25,13 @@
     <div>
       <h3>已纳入</h3>
       <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-card v-for="(balaceTradeSymbol,index) in form.balance_trade_symbols" :key="index">
+        <el-card v-for="(balaceTradeSymbol, index) in form.balance_trade_symbols" :key="index">
           <div slot="header" class="clearfix">
-            <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency}} / {{balaceTradeSymbol.trade_symbol_quote_currency}}</span>
-            <el-input class="fr" v-model="balaceTradeSymbol.rate" style="width: 200px" disabled>
+            <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency.toUpperCase()}} / {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span>
+            <span class="fr" style="color: #999" v-if="balaceTradeSymbol.rate">{{balaceTradeSymbol.rate}} %</span>
+            <!--<el-input class="fr" v-model="balaceTradeSymbol.rate" style="width: 200px" disabled>
               <template slot="append">%</template>
-            </el-input>
+            </el-input>-->
           </div>
           <el-form-item label="买入价格">
             <el-input v-model="balaceTradeSymbol.cus_buy_price" placeholder="自定义购买价格"></el-input>
@@ -41,9 +45,10 @@
           <el-form-item label="启用">
             <el-switch v-model="balaceTradeSymbol.cus_enabled"></el-switch>
           </el-form-item>
+          <el-button class="fr" size="mini" type="danger" @click="delTradeSymbol(balaceTradeSymbol)">删除</el-button>
         </el-card>
-        <el-form-item style="margin-top: 15px">
-          <el-button type="primary" @click="onSubmit">完成</el-button>
+        <el-form-item style="margin-top: 25px; width: 100%; text-align: right">
+          <el-button type="primary" size="medium" @click="onSubmit">完 成</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -91,6 +96,15 @@
         let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, cus_buy_price: 0, cus_sell_price: 0, cus_count: 0, cus_enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
         this.balanceTradeSymbolAddRate(obj)
         this.form.balance_trade_symbols.push(obj)
+      },
+      delTradeSymbol (tradeSymbol) {
+        this.$confirm('此操作将删除该条自动交易, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(tradeSymbol), 1)
+        })
       },
       onSubmit () {
         return this._handler(this.api.updateBalance(this.item.id, this.form))

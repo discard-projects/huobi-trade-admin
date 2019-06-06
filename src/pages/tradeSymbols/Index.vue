@@ -48,27 +48,18 @@
           key: 'id',
           width: 80
         }, {
-          label: '币种',
+          label: '交易对',
           key: 'symbol',
           width: 140
         }, {
-          label: '目标币种',
-          key: 'base_currency'
-        }, {
-          label: '当前币种',
-          key: 'quote_currency'
-        }, {
           label: '当前价格',
           key: 'close'
-        },  {
+        }, {
           label: '数量',
           key: 'count'
-        },  {
-          label: '启用',
-          key: 'enabled'
         }, {
-          label: '创建时间',
-          key: 'created_time'
+          label: '是否可用',
+          key: 'enabled'
         }, {
           label: '更新时间',
           key: 'updated_time'
