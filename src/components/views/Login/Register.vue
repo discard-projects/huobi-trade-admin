@@ -39,6 +39,7 @@ export default {
         passwordAgain: '',
         access_key: '',
         secret_key: '',
+        slack_webhook_url: '',
         confirmed_at: new Date()
       },
       rules: {
