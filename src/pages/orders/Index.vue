@@ -3,7 +3,7 @@
     <ex-table :tableData="mixTableData" @refetch="fetchData">
       <template slot="search-bar-item" slot-scope="{search}">
         <el-form-item :label="search.label" :key="search.key">
-          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: 'app内交易', value: 'kind_app'}, {label: '自动下单', value: 'kind_auto'}, {label: '自定义价格', value: 'kind_custom_price'}]"></ex-options-select>
+          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: 'APP下单', value: 'kind_app'}, {label: '接口下单', value: 'kind_custom_price'}, {label: '自动下单', value: 'kind_auto', disabled: true}]"></ex-options-select>
         </el-form-item>
       </template>
       <div slot="search-bar-operations">
@@ -109,7 +109,7 @@
         queryIntros: [{
           control: 'input',
           key: 'q_symbol_cont',
-          placeholder: 'symbol'
+          placeholder: '币种'
         }, {
           control: 'custom',
           key: 'q_kind_eq',
@@ -120,11 +120,11 @@
           key: 'id',
           width: 120
         }, {
-          label: '交易种类',
+          label: '下单方式',
           key: 'kind',
           width: 90
         }, {
-          label: '币种',
+          label: '交易对',
           key: 'symbol',
           width: 100
         }, {

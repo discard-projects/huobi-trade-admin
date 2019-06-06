@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="自定义价格" :visible.sync="dialogVisible" width="80%">
+  <el-dialog title="自定义价格" :visible.sync="dialogVisible" width="80%" top="5vh">
     <div style="margin: -30px 0 20px">
       <h3>可纳入</h3>
       <el-table :data="allowTradeSymbols" style="width: 100%">
@@ -17,7 +17,8 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="{row}">
-            <el-button size="small" type="primary" :disabled="!row.enabled || form.balance_trade_symbols && form.balance_trade_symbols.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>
+            <el-button size="small" type="primary" :disabled="!row.enabled" @click="addTradeSymbol(row)">纳入</el-button>
+            <!--<el-button size="small" type="primary" :disabled="!row.enabled || form.balance_trade_symbols && form.balance_trade_symbols.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>-->
           </template>
         </el-table-column>
       </el-table>
@@ -25,24 +26,21 @@
     <div>
       <h3>已纳入</h3>
       <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-card v-for="(balaceTradeSymbol, index) in form.balance_trade_symbols" :key="index">
+        <el-card v-for="(balaceTradeSymbol, index) in form.balance_trade_symbols" :key="index" style="margin-bottom: 10px">
           <div slot="header" class="clearfix">
             <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency.toUpperCase()}} / {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span>
             <span class="fr" style="color: #999" v-if="balaceTradeSymbol.rate">{{balaceTradeSymbol.rate}} %</span>
-            <!--<el-input class="fr" v-model="balaceTradeSymbol.rate" style="width: 200px" disabled>
-              <template slot="append">%</template>
-            </el-input>-->
           </div>
-          <el-form-item label="买入价格">
+          <el-form-item class="el-form-margin" label="买入价格">
             <el-input v-model="balaceTradeSymbol.cus_buy_price" placeholder="自定义购买价格"></el-input>
           </el-form-item>
-          <el-form-item label="卖出价格">
+          <el-form-item class="el-form-margin" label="卖出价格">
             <el-input v-model="balaceTradeSymbol.cus_sell_price" placeholder="自定义卖出价格"></el-input>
           </el-form-item>
-          <el-form-item label="数量">
+          <el-form-item class="el-form-margin" label="数量">
             <el-input v-model="balaceTradeSymbol.cus_count" placeholder="自定义购买数量"></el-input>
           </el-form-item>
-          <el-form-item label="启用">
+          <el-form-item class="el-form-margin" label="启用">
             <el-switch v-model="balaceTradeSymbol.cus_enabled"></el-switch>
           </el-form-item>
           <el-button class="fr" size="mini" type="danger" @click="delTradeSymbol(balaceTradeSymbol)">删除</el-button>
@@ -98,13 +96,17 @@
         this.form.balance_trade_symbols.push(obj)
       },
       delTradeSymbol (tradeSymbol) {
-        this.$confirm('此操作将删除该条自动交易, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+        if (!tradeSymbol.cus_buy_price && !tradeSymbol.cus_sell_price && !tradeSymbol.cus_count && !tradeSymbol.cus_enabled) {
           this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(tradeSymbol), 1)
-        })
+        } else {
+          this.$confirm('此操作将删除该条自动交易, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(tradeSymbol), 1)
+          })
+        }
       },
       onSubmit () {
         return this._handler(this.api.updateBalance(this.item.id, this.form))
@@ -122,5 +124,8 @@
 <style lang="scss" scoped>
   h3 {
     line-height: 50px;
+  }
+  .el-form-margin {
+    margin-bottom: 0;
   }
 </style>
