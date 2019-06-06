@@ -28,9 +28,9 @@
         <el-form :inline="true" :model="form">
           <div style="max-height: 600px; overflow-y: auto; overflow-x: hidden">
             <el-card v-for="(balaceTradeSymbol, index) in form.balance_trade_symbols" :key="index" style="margin-bottom: 10px">
-              <div slot="header" class="clearfisx">
+              <div slot="header" class="clearfisx" style="margin-bottom: 15px">
                 <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency.toUpperCase()}} / {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span>
-                <span class="fr" style="color: #999" v-if="balaceTradeSymbol.rate">{{balaceTradeSymbol.rate}} %</span>
+                <span class="fr" style="color: #999" v-if="balaceTradeSymbol.rate">{{balaceTradeSymbol.rate.toFixed(10)}} % <span style="margin-left: 30px">利润：{{balaceTradeSymbol.profit.toFixed(10)}} {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span></span>
               </div>
               <el-form-item class="el-form-margin" label="买入价格">
                 <el-input v-model="balaceTradeSymbol.cus_buy_price" placeholder="自定义购买价格"></el-input>
@@ -68,13 +68,20 @@
     },
     methods: {
       balanceTradeSymbolAddRate (obj) {
-        Object.defineProperty(obj, 'rate', {
-          get () {
-            return this.cus_buy_price ? this.cus_sell_price / this.cus_buy_price * 100 : ''
+        Object.defineProperties(obj, {
+          rate: {
+            get () {
+              return this.cus_buy_price ? this.cus_sell_price / this.cus_buy_price * 100 : ''
+            },
+            set (nv) {
+              if (+nv == nv) {
+                this.cus_sell_price = this.cus_buy_price * nv / 100
+              }
+            }
           },
-          set (nv) {
-            if (+nv == nv) {
-              this.cus_sell_price = this.cus_buy_price * nv / 100
+          profit: {
+            get () {
+              return this.cus_buy_price ? (this.cus_sell_price - this.cus_buy_price) * this.cus_count - this.cus_count * 0.002 * this.cus_buy_price - this.cus_count * 0.998 * this.cus_sell_price * 0.002 : ''
             }
           }
         })
