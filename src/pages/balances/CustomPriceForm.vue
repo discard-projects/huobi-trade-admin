@@ -44,7 +44,7 @@
               <el-form-item class="el-form-margin" label="启用">
                 <el-switch v-model="balaceTradeSymbol.cus_enabled"></el-switch>
               </el-form-item>
-              <el-button class="fr" size="mini" type="danger" @click="delTradeSymbol(balaceTradeSymbol)">删除</el-button>
+              <el-button class="fr" size="mini" type="danger" @click="deleteBalanceTradeSymbol(balaceTradeSymbol)">删除</el-button>
             </el-card>
           </div>
           <el-form-item style="margin-top: 25px; width: 100%; text-align: right; margin-bottom: -10px">
@@ -98,17 +98,19 @@
         this.balanceTradeSymbolAddRate(obj)
         this.form.balance_trade_symbols.push(obj)
       },
-      delTradeSymbol (tradeSymbol) {
-        if (!tradeSymbol.cus_buy_price && !tradeSymbol.cus_sell_price && !tradeSymbol.cus_count && !tradeSymbol.cus_enabled) {
-          this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(tradeSymbol), 1)
-        } else {
+      deleteBalanceTradeSymbol (balanceTradeSymbol) {
+        if (balanceTradeSymbol.id) {
           this.$confirm('此操作将删除该条自动交易, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(tradeSymbol), 1)
+            this.api.deleteBalanceTradeSymbol(balanceTradeSymbol.id).then(res => {
+              this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(balanceTradeSymbol), 1)
+            })
           })
+        } else {
+          this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(balanceTradeSymbol), 1)
         }
       },
       onSubmit () {

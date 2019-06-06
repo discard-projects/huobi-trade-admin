@@ -65,8 +65,8 @@ export default {
         this.footprints = res.data.items
       })
     },
-    getBalancesTradeSymbols (item) {
-      this.api.getBalancesTradeSymbols(item.id).then(res => {
+    getBalanceTradeSymbols (item) {
+      this.api.getBalanceTradeSymbols(item.id).then(res => {
         this.footprints = res.data.items
       })
     }
