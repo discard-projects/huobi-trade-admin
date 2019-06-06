@@ -138,7 +138,7 @@
         }, {
           label: '三方交易状态',
           key: 'state',
-          width: 110
+          width: 120
         }, {
           label: '数量',
           key: 'amount'
