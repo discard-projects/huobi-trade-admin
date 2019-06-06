@@ -81,7 +81,7 @@
           },
           profit: {
             get () {
-              return this.cus_buy_price ? (this.cus_sell_price - this.cus_buy_price) * this.cus_count - this.cus_count * 0.002 * this.cus_buy_price - this.cus_count * 0.998 * this.cus_sell_price * 0.002 : ''
+              return this.cus_buy_price ? (this.cus_sell_price * this.cus_count * 0.998 - this.cus_buy_price * this.cus_count) - this.cus_count * 0.002 * this.cus_buy_price - this.cus_count * 0.998 * this.cus_sell_price * 0.002 : ''
             }
           }
         })
