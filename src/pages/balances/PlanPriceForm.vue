@@ -125,7 +125,8 @@
         }
       },
       onSubmit () {
-        return this._handler(this.api.updateBalance(this.item.id, this.form))
+        let { balance_plans } = this.form
+        return this._handler(this.api.updateBalance(this.item.id, {balance_plans}))
       }
     },
     mounted () {
