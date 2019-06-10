@@ -36,7 +36,8 @@
         {{row.currency.toUpperCase()}}
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
-        <el-button size="mini" @click="showCustomPriceFormDialog(row)">设置自动交易</el-button>
+        <el-button size="mini" @click="showCustomPriceFormDialog(row)">固定值交易</el-button>
+        <el-button size="mini" @click="showPlanPriceFormDialog(row)">多节点交易</el-button>
         <!--<el-button size="mini" @click="showEditDialog(row)">编辑</el-button>-->
       </template>
     </ex-table>
@@ -46,6 +47,7 @@
 <script>
 import mixTableData from '@/mixins/mixTableData'
 import CustomPriceForm from './CustomPriceForm.vue'
+import PlanPriceForm from './PlanPriceForm.vue'
 export default {
   mixins: [mixTableData],
   data () {
@@ -59,6 +61,9 @@ export default {
     },
     showCustomPriceFormDialog (item) {
       this.$ext.mount(CustomPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
+    },
+    showPlanPriceFormDialog (item) {
+      this.$ext.mount(PlanPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
     },
     fetchItemFootprints (item) {
       this.api.getBalanceFootprints(item.id).then(res => {
@@ -116,7 +121,7 @@ export default {
       }],
       opIntro: {
         label: '操作',
-        width: 180
+        width: 240
       }
     })
   }

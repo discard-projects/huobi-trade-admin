@@ -17,8 +17,8 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="{row}">
-              <el-button size="mini" type="primary" :disabled="!row.enabled" @click="addTradeSymbol(row)">纳入</el-button>
-              <!--<el-button size="small" type="primary" :disabled="!row.enabled || form.balance_trade_symbols && form.balance_trade_symbols.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>-->
+              <el-button size="mini" type="primary" :disabled="!row.enabled" @click="addBalancePlan(row)">纳入</el-button>
+              <!--<el-button size="small" type="primary" :disabled="!row.enabled || form.balance_plans && form.balance_plans.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -27,24 +27,33 @@
         <h3>已纳入</h3>
         <el-form :inline="true" :model="form">
           <div style="max-height: 600px; overflow-y: auto; overflow-x: hidden">
-            <el-card v-for="(balaceTradeSymbol, index) in form.balance_trade_symbols" :key="index" style="margin-bottom: 10px">
+            <el-card v-for="(balancePlan, index) in form.balance_plans" :key="index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
-                <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency.toUpperCase()}} / {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span>
-                <span class="fr" style="color: #999" v-if="balaceTradeSymbol.rate">{{balaceTradeSymbol.rate.toFixed(10)}} % <span style="margin-left: 30px">利润：{{balaceTradeSymbol.profit.toFixed(10)}} {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span></span>
+                <span class="fl">{{balancePlan.trade_symbol.base_currency.toUpperCase()}} / {{balancePlan.trade_symbol.quote_currency.toUpperCase()}}</span>
+                <span class="fr" style="color: #999" v-if="balancePlan.rate">{{balancePlan.rate.toFixed(10)}} %</span>
               </div>
-              <el-form-item class="el-form-margin" label="买入价格">
-                <el-input v-model="balaceTradeSymbol.cus_buy_price" placeholder="自定义购买价格"></el-input>
+              <el-form-item class="el-form-margin" label="区间起点">
+                <el-input v-model="balancePlan.range_begin_price" placeholder="区间起点价格"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="卖出价格">
-                <el-input v-model="balaceTradeSymbol.cus_sell_price" placeholder="自定义卖出价格"></el-input>
+              <el-form-item class="el-form-margin" label="区间终点">
+                <el-input v-model="balancePlan.range_end_price" placeholder="区间终点价格"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="数量">
-                <el-input v-model="balaceTradeSymbol.cus_count" placeholder="自定义购买数量" style="width: 130px"></el-input>
+              <el-form-item class="el-form-margin" label="区间间隔">
+                <el-input v-model="balancePlan.interval_price" placeholder="自定义区间间隔"></el-input>
+              </el-form-item>
+              <el-form-item class="el-form-margin" label="初始价格">
+                <el-input v-model="balancePlan.open_price" placeholder="自定义初始价格"></el-input>
+              </el-form-item>
+              <el-form-item class="el-form-margin" label="固定数量">
+                <el-input v-model="balancePlan.count" placeholder="自定义固定数量" style="width: 130px"></el-input>
+              </el-form-item>
+              <el-form-item class="el-form-margin" label="间隔追加数量">
+                <el-input v-model="balancePlan.addition_count" placeholder="自定义间隔追加数量" style="width: 130px"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="启用">
-                <el-switch v-model="balaceTradeSymbol.cus_enabled"></el-switch>
+                <el-switch v-model="balancePlan.enabled"></el-switch>
               </el-form-item>
-              <el-button class="fr" size="mini" type="danger" @click="deleteBalanceTradeSymbol(balaceTradeSymbol)">删除</el-button>
+              <el-button class="fr" size="mini" type="danger" @click="deleteBalancePlan(balancePlan)">删除</el-button>
             </el-card>
           </div>
           <el-form-item style="margin-top: 25px; width: 100%; text-align: right; margin-bottom: -10px">
@@ -67,30 +76,25 @@
       }
     },
     methods: {
-      balanceTradeSymbolAddRate (obj) {
+      balancePlanAddRate (obj) {
         Object.defineProperties(obj, {
           rate: {
             get () {
-              return this.cus_buy_price ? this.cus_sell_price / this.cus_buy_price * 100 : ''
+              return this.open_price ? (Number(this.open_price) + Number(this.interval_price)) / this.open_price * 100 : ''
             },
             set (nv) {
               if (+nv == nv) {
-                this.cus_sell_price = this.cus_buy_price * nv / 100
+                // this.cus_sell_price = this.cus_buy_price * nv / 100
               }
-            }
-          },
-          profit: {
-            get () {
-              return this.cus_buy_price ? (this.cus_sell_price * this.cus_count * 0.998 - this.cus_buy_price * this.cus_count) - this.cus_count * 0.002 * this.cus_buy_price - this.cus_count * 0.998 * this.cus_sell_price * 0.002 : ''
             }
           }
         })
       },
       fetchData () {
-        this._fetchData(this.api.getBalance(this.item.id)).then(res => {
-          this.form.balance_trade_symbols.forEach(obj => {
+        this._fetchData(this.api.getBalancePlans(this.item.id)).then(res => {
+          this.form.balance_plans.forEach(obj => {
             this.$nextTick(() => {
-              this.balanceTradeSymbolAddRate(obj)
+              this.balancePlanAddRate(obj)
             })
           })
         })
@@ -100,24 +104,24 @@
           this.allowTradeSymbols = res.data.items
         })
       },
-      addTradeSymbol (tradeSymbol) {
-        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, cus_buy_price: 0, cus_sell_price: 0, cus_count: 0, cus_enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
-        this.balanceTradeSymbolAddRate(obj)
-        this.form.balance_trade_symbols.push(obj)
+      addBalancePlan (tradeSymbol) {
+        let obj = {balance_id: this.item.id, range_begin_price: 0, range_end_price: 0, interval_price: 0, open_price: 0, count: 0, addition_count: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
+        this.balancePlanAddRate(obj)
+        this.form.balance_plans.push(obj)
       },
-      deleteBalanceTradeSymbol (balanceTradeSymbol) {
-        if (balanceTradeSymbol.id) {
+      deleteBalancePlan (balancePlan) {
+        if (balancePlan.id) {
           this.$confirm('此操作将删除该条数据, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.api.deleteBalanceTradeSymbol(balanceTradeSymbol.id).then(res => {
-              this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(balanceTradeSymbol), 1)
+            this.api.deleteBalancePlan(balancePlan.id).then(res => {
+              this.form.balance_plans.splice(this.form.balance_plans.indexOf(balancePlan), 1)
             })
           })
         } else {
-          this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(balanceTradeSymbol), 1)
+          this.form.balance_plans.splice(this.form.balance_plans.indexOf(balancePlan), 1)
         }
       },
       onSubmit () {
