@@ -79,15 +79,14 @@ export default {
   created () {
     this.mixTableData = Object.assign(this.mixTableData, {
       query: {
-        q_balance_trade_symbols_cus_enabled_in_any: true
+        q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_in_any: true
       },
       queryIntros: [{
         control: 'input',
-        key: 'q_currency_cont',
-        placeholder: '目标币种'
+        key: 'q_currency_cont'
       }, {
         control: 'custom',
-        key: 'q_balance_trade_symbols_cus_enabled_in_any'
+        key: 'q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_in_any'
       }],
       dataIntros: [{
         label: '#',
@@ -99,7 +98,7 @@ export default {
       }, {
         label: '已设定交易货币',
         valueHandler (key, row, index) {
-          return row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(',')
+          return `[ ${row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')} ], [ ${row.balance_plans.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')} ]`
         }
       }, {
         label: '冻结',
