@@ -147,6 +147,10 @@ let api = {
   updateOrderStatus: (orderId, status) => cusAxios.put(`v1/orders/${orderId}/change_status`, {status}),
   createOrder (data) { return cusAxios.post(`v1/orders`, data) },
   deleteOrder: (id) => cusAxios.delete(`v1/orders/${id}`),
+  // order_plans
+  getOrderPlans (params) { return cusAxios.get('v1/order_plans', {params}) },
+  getOrderPlanFootprints: (id) => cusAxios.get(`v1/order_plans/${id}/footprints`),
+  getOrderPlan (id, params) { return cusAxios.get(`v1/order_plans/${id}`, {params}) },
   // balances
   getBalances (params) { return cusAxios.get('v1/balances', {params}) },
   getBalanceFootprints: (id) => cusAxios.get(`v1/balances/${id}/footprints`),

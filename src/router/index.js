@@ -19,11 +19,11 @@ Vue.router = new Router({
     }, {
       path: 'workers', name: 'Workers', meta: { title: 'Workers', icon: 'workers' }, component: (resolve) => { require(['@/pages/workers/Index'], resolve) },
     }, {
-      path: 'servicePeople', name: 'ServicePeople', meta: { title: 'ServicePeople', icon: 'service_people' }, component: (resolve) => { require(['@/pages/servicePeople/Index'], resolve) },
-    }, {
       path: 'orders', name: 'Orders', meta: { title: 'Orders', icon: 'orders' }, component: (resolve) => { require(['@/pages/orders/Index'], resolve) },
     }, {
       path: 'balances', name: 'Balances', meta: { title: 'Balances', icon: 'balances' }, component: (resolve) => { require(['@/pages/balances/Index'], resolve) },
+    }, {
+      path: 'orderPlans', name: 'OrderPlans', meta: { title: 'OrderPlans', icon: 'order_Plans' }, component: (resolve) => { require(['@/pages/orderPlans/Index'], resolve) },
     }, {
       path: 'tradeSymbols', name: 'TradeSymbols', meta: { title: 'TradeSymbols', icon: 'tradeSymbols' }, component: (resolve) => { require(['@/pages/tradeSymbols/Index'], resolve) },
     }, {
