@@ -61,7 +61,7 @@ export default {
       this.$ext.mount(CustomPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
     },
     fetchItemFootprints (item) {
-      this.api.getCarouselFootprints(item.id).then(res => {
+      this.api.getBalanceFootprints(item.id).then(res => {
         this.footprints = res.data.items
       })
     },
