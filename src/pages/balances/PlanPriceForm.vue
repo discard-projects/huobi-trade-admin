@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="自定义价格" :visible.sync="dialogVisible" width="80%" top="5vh">
+  <el-dialog title="自定义价格" :visible.sync="dialogVisible" width="83%" top="5vh">
     <div style="display: flex">
       <div style="margin: -30px 40px 20px 0; width: 400px">
         <h3>可纳入</h3>
@@ -41,14 +41,14 @@
               <el-form-item class="el-form-margin" label="区间间隔">
                 <el-input v-model="balancePlan.interval_price" placeholder="自定义区间间隔"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="初始价格">
+              <el-form-item class="el-form-margin" label="标杆价格">
                 <el-input v-model="balancePlan.open_price" placeholder="自定义初始价格"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="固定数量">
-                <el-input v-model="balancePlan.count" placeholder="自定义固定数量" style="width: 130px"></el-input>
+                <el-input v-model="balancePlan.count" placeholder="自定义固定数量"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="间隔追加数量">
-                <el-input v-model="balancePlan.addition_count" placeholder="自定义间隔追加数量" style="width: 130px"></el-input>
+                <el-input v-model="balancePlan.addition_count" placeholder="自定义间隔追加数量" style="width: 150px"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="启用">
                 <el-switch v-model="balancePlan.enabled"></el-switch>
@@ -143,6 +143,6 @@
     line-height: 50px;
   }
   .el-form-margin {
-    margin-bottom: 0 !important;
+    margin-bottom: 5px !important;
   }
 </style>
