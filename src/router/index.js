@@ -25,6 +25,8 @@ Vue.router = new Router({
     }, {
       path: 'orderPlans', name: 'OrderPlans', meta: { title: 'OrderPlans', icon: 'order_Plans' }, component: (resolve) => { require(['@/pages/orderPlans/Index'], resolve) },
     }, {
+      path: 'orderSmarts', name: 'OrderSmarts', meta: { title: 'OrderSmarts', icon: 'order_Smarts' }, component: (resolve) => { require(['@/pages/orderSmarts/Index'], resolve) },
+    }, {
       path: 'tradeSymbols', name: 'TradeSymbols', meta: { title: 'TradeSymbols', icon: 'tradeSymbols' }, component: (resolve) => { require(['@/pages/tradeSymbols/Index'], resolve) },
     }, {
       path: 'dic', name: 'Dic', meta: {title: 'Dic'}, component: (resolve) => { require(['@/pages/dic/Index'], resolve) }, children: [

@@ -38,6 +38,7 @@
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-button size="mini" @click="showCustomPriceFormDialog(row)">固定值交易</el-button>
         <el-button size="mini" @click="showPlanPriceFormDialog(row)">多节点交易</el-button>
+        <el-button size="mini" @click="showSmartPriceFormDialog(row)">智能交易</el-button>
         <!--<el-button size="mini" @click="showEditDialog(row)">编辑</el-button>-->
       </template>
     </ex-table>
@@ -48,6 +49,7 @@
 import mixTableData from '@/mixins/mixTableData'
 import CustomPriceForm from './CustomPriceForm.vue'
 import PlanPriceForm from './PlanPriceForm.vue'
+import SmartPriceForm from './SmartPriceForm.vue'
 export default {
   mixins: [mixTableData],
   data () {
@@ -65,6 +67,9 @@ export default {
     showPlanPriceFormDialog (item) {
       this.$ext.mount(PlanPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
     },
+    showSmartPriceFormDialog (item) {
+      this.$ext.mount(SmartPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
+    },
     fetchItemFootprints (item) {
       this.api.getBalanceFootprints(item.id).then(res => {
         this.footprints = res.data.items
@@ -79,14 +84,14 @@ export default {
   created () {
     this.mixTableData = Object.assign(this.mixTableData, {
       query: {
-        q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_in_any: true
+        q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_or_balance_smarts_enabled_in_any: true
       },
       queryIntros: [{
         control: 'input',
         key: 'q_currency_cont'
       }, {
         control: 'custom',
-        key: 'q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_in_any'
+        key: 'q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_or_balance_smarts_enabled_in_any'
       }],
       dataIntros: [{
         label: '#',
@@ -98,7 +103,7 @@ export default {
       }, {
         label: '已设定交易货币',
         valueHandler (key, row, index) {
-          return `[ ${row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')} ], [ ${row.balance_plans.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')} ]`
+          return `[${row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')}], [${row.balance_plans.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')}] , [${row.balance_smarts.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')}]`
         }
       }, {
         label: '冻结',

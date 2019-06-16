@@ -3,7 +3,7 @@
     <ex-table :tableData="mixTableData" @refetch="fetchData">
       <template slot="search-bar-item" slot-scope="{search}">
         <el-form-item :label="search.label" :key="search.key">
-          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: 'APP下单', value: 'kind_app'}, {label: '接口下单', value: 'kind_custom_price'}, {label: '自动下单', value: 'kind_auto', disabled: true}]" placeholder="交易种类"></ex-options-select>
+          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: 'APP下单', value: 'kind_app'}, {label: '接口下单[自定义价格]', value: 'kind_custom_price'}, {label: '计划下单', value: 'kind_plan'}, {label: '智能下单[倍数]', value: 'kind_smart'}, {label: '自动下单', value: 'kind_auto', disabled: true}]" placeholder="交易种类"></ex-options-select>
         </el-form-item>
       </template>
       <div slot="search-bar-operations">
@@ -16,7 +16,9 @@
       <template slot="kind" slot-scope="{row}">
         <ex-status-tag type="info" v-if="row.kind == 'kind_app'">APP下单</ex-status-tag>
         <ex-status-tag v-else-if="row.kind == 'kind_custom_price'">接口下单</ex-status-tag>
-        <ex-status-tag type="success" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>
+        <!--<ex-status-tag type="success" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>-->
+        <ex-status-tag type="success" v-else-if="row.kind == 'kind_plan'">计划下单</ex-status-tag>
+        <ex-status-tag type="primary" v-else-if="row.kind == 'kind_smart'">智能下单</ex-status-tag>
       </template>
       <template slot="symbol" slot-scope="{row}">
         {{row.symbol_base_currency.toUpperCase()}} / {{row.symbol_quote_currency.toUpperCase()}}

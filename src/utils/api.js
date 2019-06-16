@@ -151,6 +151,10 @@ let api = {
   getOrderPlans (params) { return cusAxios.get('v1/order_plans', {params}) },
   getOrderPlanFootprints: (id) => cusAxios.get(`v1/order_plans/${id}/footprints`),
   getOrderPlan (id, params) { return cusAxios.get(`v1/order_plans/${id}`, {params}) },
+  // order_smarts
+  getOrderSmarts (params) { return cusAxios.get('v1/order_smarts', {params}) },
+  getOrderSmartFootprints: (id) => cusAxios.get(`v1/order_smarts/${id}/footprints`),
+  getOrderSmart (id, params) { return cusAxios.get(`v1/order_smarts/${id}`, {params}) },
   // balances
   getBalances (params) { return cusAxios.get('v1/balances', {params}) },
   getBalanceFootprints: (id) => cusAxios.get(`v1/balances/${id}/footprints`),
@@ -158,7 +162,8 @@ let api = {
   updateBalance (id, data) { return cusAxios.put(`v1/balances/${id}`, data) },
   deleteBalanceTradeSymbol: (balanceTradeSymbolId) => cusAxios.delete(`v1/balance_trade_symbols/${balanceTradeSymbolId}`),
   getBalanceTradeSymbols (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
-  deleteBalancePlan: (balanceTradeSymbolId) => cusAxios.delete(`v1/balance_plans/${balanceTradeSymbolId}`),
+  deleteBalancePlan: (balancePlanId) => cusAxios.delete(`v1/balance_plans/${balancePlanId}`),
+  deleteBalanceSmart: (balanceSmartId) => cusAxios.delete(`v1/balance_smarts/${balanceSmartId}`),
   getBalancePlans (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
 
   getCarouselFootprints: (id) => cusAxios.get(`carousels/${id}/footprints`),

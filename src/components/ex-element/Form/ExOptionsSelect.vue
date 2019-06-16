@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="selectValue" :disabled="disabled" :placeholder="placeholder" :clearable="clearable">
+  <el-select v-model="selectValue" :disabled="disabled" :placeholder="placeholder" :clearable="clearable" :multiple="multiple">
     <el-option
       v-for="item in options" :key="item[valueKey]"
       :label="item[labelKey] || item[valueKey]"
@@ -31,6 +31,9 @@ export default {
     },
     'valueKey': {
       default: 'value'
+    },
+    'multiple': {
+      default: false
     },
     'options': {
       type: Array,
