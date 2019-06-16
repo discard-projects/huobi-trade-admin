@@ -69,6 +69,9 @@ export default {
         key: 'id',
         width: 80
       }, {
+        label: '交易对',
+        key: 'full_coin_name'
+      }, {
         label: '价格',
         key: 'price'
       }, {
