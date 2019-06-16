@@ -81,7 +81,7 @@ export default {
         key: 'sell_price'
       }, {
         label: '卖出数量',
-        key: 'sell_price'
+        key: 'sell_count'
       }, {
         label: '状态',
         key: 'status'

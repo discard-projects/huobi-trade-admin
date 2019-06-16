@@ -4,6 +4,9 @@
       <template slot="symbol" slot-scope="{row}">
         {{row.base_currency.toUpperCase()}} / {{row.quote_currency.toUpperCase()}}
       </template>
+      <template slot="include_users" slot-scope="{row}">
+        <ui-json :json="row.include_users"></ui-json>
+      </template>
       <template slot="enabled" slot-scope="{row}">
         <ex-status-tag type="success" v-if="row.enabled">可下单</ex-status-tag>
         <ex-status-tag type="danger" v-if="!row.enabled">不可下单</ex-status-tag>
@@ -55,8 +58,8 @@
           label: '当前价格',
           key: 'close'
         }, {
-          label: '数量',
-          key: 'count'
+          label: '纳入用户',
+          key: 'include_users'
         }, {
           label: '是否可用',
           key: 'enabled'
