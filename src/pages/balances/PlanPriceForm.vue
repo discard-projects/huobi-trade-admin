@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="多节点交易" :visible.sync="dialogVisible" width="83%" top="5vh">
+  <el-dialog title="计划交易" :visible.sync="dialogVisible" width="83%" top="5vh">
     <div style="display: flex">
       <div style="margin: -30px 40px 20px 0; width: 400px">
         <h3>可纳入</h3>

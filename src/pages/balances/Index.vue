@@ -40,7 +40,7 @@
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-button size="mini" @click="showCustomPriceFormDialog(row)">固定值交易</el-button>
-        <el-button size="mini" @click="showPlanPriceFormDialog(row)">多节点交易</el-button>
+        <el-button size="mini" @click="showPlanPriceFormDialog(row)">计划交易</el-button>
         <el-button size="mini" @click="showSmartPriceFormDialog(row)">智能交易</el-button>
         <!--<el-button size="mini" @click="showEditDialog(row)">编辑</el-button>-->
       </template>

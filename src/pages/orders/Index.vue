@@ -3,7 +3,8 @@
     <ex-table :tableData="mixTableData" @refetch="fetchData">
       <template slot="search-bar-item" slot-scope="{search}">
         <el-form-item :label="search.label" :key="search.key">
-          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: 'APP下单', value: 'kind_app'}, {label: '接口下单[自定义价格]', value: 'kind_custom_price'}, {label: '计划下单', value: 'kind_plan'}, {label: '智能下单[倍数]', value: 'kind_smart'}, {label: '自动下单', value: 'kind_auto', disabled: true}]" placeholder="交易种类"></ex-options-select>
+          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true"
+                             :options="[{label: 'APP下单', value: 'kind_app'}, {label: '接口下单[固定值]', value: 'kind_custom_price'}, {label: '计划下单[多节点]', value: 'kind_plan'}, {label: '智能下单[倍数]', value: 'kind_smart'}, {label: '自动下单[智能分析]', value: 'kind_auto', disabled: true}]" placeholder="交易种类"></ex-options-select>
         </el-form-item>
       </template>
       <div slot="search-bar-operations">
@@ -15,8 +16,8 @@
       </template>
       <template slot="kind" slot-scope="{row}">
         <ex-status-tag type="info" v-if="row.kind == 'kind_app'">APP下单</ex-status-tag>
-        <ex-status-tag v-else-if="row.kind == 'kind_custom_price'">接口下单</ex-status-tag>
-        <!--<ex-status-tag type="success" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>-->
+        <ex-status-tag v-else-if="row.kind == 'kind_custom_price'">固定值下单</ex-status-tag>
+        <ex-status-tag type="success" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>
         <ex-status-tag type="success" v-else-if="row.kind == 'kind_plan'">计划下单</ex-status-tag>
         <ex-status-tag type="primary" v-else-if="row.kind == 'kind_smart'">智能下单</ex-status-tag>
       </template>
@@ -30,7 +31,7 @@
       <template slot="status" slot-scope="{row}">
         <ex-status-tag v-if="row.status == 'status_created'">已提交</ex-status-tag>
         <ex-status-tag type="warning" v-if="row.status == 'status_filled'">已成交</ex-status-tag>
-        <ex-status-tag type="success" v-if="row.status == 'status_finished'">完成买卖</ex-status-tag>
+        <ex-status-tag type="success" v-if="row.status == 'status_finished'">完成交易</ex-status-tag>
         <ex-status-tag type="info" v-if="row.status == 'status_untracked'">停止追踪</ex-status-tag>
         <ex-status-tag type="danger" v-if="row.status == 'status_canceled'">已取消</ex-status-tag>
       </template>
@@ -124,7 +125,7 @@
         }, {
           label: '下单方式',
           key: 'kind',
-          width: 90
+          width: 100
         }, {
           label: '交易对',
           key: 'symbol',

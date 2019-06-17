@@ -8,7 +8,7 @@
   export default {
     name: 'App',
     created () {
-      console.log('v 0.6.17.1')
+      console.log('v 0.6.17.2')
     }
   }
 </script>

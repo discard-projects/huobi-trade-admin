@@ -44,7 +44,7 @@
         queryIntros: [{
           control: 'input',
           key: 'q_base_currency_cont',
-          placeholder: 'base_currency'
+          placeholder: '币种'
         }],
         dataIntros: [{
           label: '#',
