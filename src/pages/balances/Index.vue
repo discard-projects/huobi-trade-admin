@@ -2,8 +2,8 @@
   <div>
     <ex-table :tableData="mixTableData" @refetch="fetchData" tableType="expand">
       <template slot="search-bar-item" slot-scope="{search}">
-        <el-form-item :label="search.label" :key="search.key">
-          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true" :options="[{label: '已开启', value: true}, {label: '未开启', value: false}]" placeholder="请选择交易是否已开启"></ex-options-select>
+        <el-form-item :label="search.label" :key="search.key" v-if="search.key=='q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_or_balance_smarts_enabled_in_any'">
+          <ex-options-select v-model="mixTableData.query[search.key]" multiple :options="[{label: '已开启', value: true}, {label: '未开启', value: false}]" placeholder="请选择交易是否已开启"></ex-options-select>
         </el-form-item>
       </template>
       <div slot="search-bar-operations">
@@ -31,6 +31,9 @@
 
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)">{{row.id}}</el-button>
+      </template>
+      <template slot="enabled_items" slot-scope="{row}">
+        <ui-json :json="row.enabled_items"></ui-json>
       </template>
       <template slot="currency" slot-scope="{row}">
         {{row.currency.toUpperCase()}}
@@ -84,7 +87,7 @@ export default {
   created () {
     this.mixTableData = Object.assign(this.mixTableData, {
       query: {
-        q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_or_balance_smarts_enabled_in_any: true
+        q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_or_balance_smarts_enabled_in_any: [true, false]
       },
       queryIntros: [{
         control: 'input',
@@ -100,11 +103,16 @@ export default {
       }, {
         label: '目标币种',
         key: 'currency'
-      }, {
+      }, /*{
         label: '已设定交易货币',
         valueHandler (key, row, index) {
-          return `[${row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')}], [${row.balance_plans.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')}] , [${row.balance_smarts.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')}]`
-        }
+          return `[ ${row.balance_trade_symbols.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')} ], [ ${row.balance_plans.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')} ] , [ ${row.balance_smarts.map(item => item.trade_symbol.quote_currency.toUpperCase()).join(', ')} ]`
+        },
+        width: 300
+      }, */{
+        label: '纳入用户',
+        key: 'enabled_items',
+        width: 300
       }, {
         label: '冻结',
         key: 'frozen_balance',
@@ -118,14 +126,16 @@ export default {
         key: 'total_balance'
       }, {
         label: '创建时间',
-        key: 'created_time'
+        key: 'created_time',
+        width: 135
       }, {
         label: '更新时间',
-        key: 'updated_time'
+        key: 'updated_time',
+        width: 135
       }],
       opIntro: {
         label: '操作',
-        width: 240
+        width: 325
       }
     })
   }

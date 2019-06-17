@@ -6,7 +6,7 @@
           <ex-model-select v-model="mixTableData.query[search.key]" api="/v1/balance_plans" clearable labelKey="full_coin_name" placeholder="交易对"></ex-model-select>
         </el-form-item>
         <el-form-item :label="search.label" :key="search.key" v-if="search.key == 'q_status_in_any'">
-          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true"
+          <ex-options-select v-model="mixTableData.query[search.key]" :clearable="false"
                              :options="[{label: '买入中', value: 'status_buying'}, {label: '已买入', value: 'status_buyed'},
                              {label: '已卖出', value: 'status_selled'}, {label: '卖出中', value: 'status_selling'},
                              {label: '已关闭', value: 'status_close'}]" multiple placeholder="状态"></ex-options-select>

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="自定义价格" :visible.sync="dialogVisible" width="83%" top="5vh">
+  <el-dialog title="智能交易" :visible.sync="dialogVisible" width="83%" top="5vh">
     <div style="display: flex">
       <div style="margin: -30px 40px 20px 0; width: 400px">
         <h3>可纳入</h3>
@@ -30,19 +30,19 @@
             <el-card v-for="(balanceSmart, index) in form.balance_smarts" :key="index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
                 <span class="fl">{{balanceSmart.trade_symbol.base_currency.toUpperCase()}} / {{balanceSmart.trade_symbol.quote_currency.toUpperCase()}}</span>
-                <span class="fr" style="color: #999" v-if="balanceSmart.rate">每下跌【{{balanceSmart.rate.toFixed(10)}}%】买入上次2倍个数</span>
+                <span class="fr" style="color: #999" v-if="balanceSmart.rate">每下跌【{{balanceSmart.rate.toFixed(10)}}%】买入上次两倍个数</span>
               </div>
               <el-form-item class="el-form-margin" label="起始买入价格">
                 <el-input v-model="balanceSmart.open_price" placeholder="起始买入价格"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="买入间隔">
-                <el-input v-model="balanceSmart.interval_price" placeholder="买入间隔"></el-input>
+              <el-form-item class="el-form-margin" label="下跌买入间隔">
+                <el-input v-model="balanceSmart.interval_price" placeholder="下跌买入间隔"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="起始买入数量">
                 <el-input v-model="balanceSmart.count" placeholder="起始买入数量"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="盈利百分比">
-                <el-input v-model="balanceSmart.sell_percent" placeholder="盈利百分比"></el-input>
+              <el-form-item class="el-form-margin" label="盈利百分比数">
+                <el-input v-model="balanceSmart.sell_percent" type="number" placeholder="如：3 代表盈利 3% 卖出"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="启用">
                 <el-switch v-model="balanceSmart.enabled"></el-switch>
