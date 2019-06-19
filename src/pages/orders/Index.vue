@@ -24,9 +24,9 @@
       <template slot="symbol" slot-scope="{row}">
         {{row.symbol_base_currency.toUpperCase()}} / {{row.symbol_quote_currency.toUpperCase()}}
       </template>
-      <template slot="ctype" slot-scope="{row}">
-        <ex-status-tag type="success" v-if="row.ctype == 'buy-limit'">买入</ex-status-tag>
-        <ex-status-tag type="danger" v-if="row.ctype == 'sell-limit'">卖出</ex-status-tag>
+      <template slot="category" slot-scope="{row}">
+        <ex-status-tag type="success" v-if="row.category == 'category_buy'">买入</ex-status-tag>
+        <ex-status-tag type="danger" v-if="row.category == 'category_sell'">卖出</ex-status-tag>
       </template>
       <template slot="status" slot-scope="{row}">
         <ex-status-tag v-if="row.status == 'status_created'">已提交</ex-status-tag>
@@ -136,7 +136,7 @@
           width: 100
         }, {
           label: '买入/卖出',
-          key: 'ctype',
+          key: 'category',
           width: 80
         }, {
           label: '交易状态',
