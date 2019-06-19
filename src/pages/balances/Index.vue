@@ -50,8 +50,7 @@
         </el-popover>
         <el-popover placement="top-start" width="400" trigger="hover"
                     content="以起始价格买入起始数量，如下跌规定间隔价格，则以两倍数量买入上一次买入数量；
-                    当持有数量的平均价格达到规定盈利百分比则挂单卖出，若卖出则将起始价格更新为刚刚卖出价格的99%，并重新挂单买入起始数量；
-                    若未卖出继续下跌到应该再次买入价格，则将卖出价格撤单，并再次买入上次买入的两倍数量">
+                    当持有数量的平均价格达到规定盈利百分比则挂单卖出使其剩余 起始数量的一半，并以当前价格虚拟买入剩余数量且重新开始周期">
           <el-button slot="reference" size="small" @click="showSmartPriceFormDialog(row)">智能交易</el-button>
         </el-popover>
       </template>
