@@ -10,7 +10,8 @@
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
       <template slot="id" slot-scope="{row, $index, intro}">
-        <el-button type="text" @click="$refs['footprintRef'].showDialog(row)">{{row.id}}</el-button>
+        <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
+        <el-button type="text" @click="showDetailDialog(row)">{{row.id}}</el-button>
       </template>
       <template slot="currency" slot-scope="{row, $index, intro}">
         <div style="color: #409EFF; font-weight: 600" @click="previewDialog(row)">{{row.currency.toUpperCase()}}</div>
@@ -46,6 +47,7 @@
   import CustomPriceForm from './CustomPriceForm.vue'
   import PlanPriceForm from './PlanPriceForm.vue'
   import SmartPriceForm from './SmartPriceForm.vue'
+  import Show from './Show.vue'
   import ExDialogJson from '@/components/ex-element/Dialog/ExDialogJson'
   export default {
     mixins: [mixTableData],
@@ -67,6 +69,9 @@
       },
       showSmartPriceFormDialog (item) {
         this.$ext.mount(SmartPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
+      },
+      showDetailDialog (item) {
+        this.$ext.mount(Show, {onEl: this.$el, props: {item}, data: {owner: this}})
       },
       fetchItemFootprints (item) {
         this.api.getBalanceFootprints(item.id).then(res => {
