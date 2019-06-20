@@ -13,7 +13,7 @@
       <template slot="expand" slot-scope="{row, $index, intro}">
         <el-table :data="row.balance_trade_symbols" style="width: 100%">
           <el-table-column prop="id" label="#"></el-table-column>
-          <el-table-column prop="trade_symbol" label="trade_symbol" width="250">
+          <el-table-column prop="trade_symbol" label="trade_symbol" width="320">
             <template slot-scope="{row}">
               <ui-json :json="row.trade_symbol" style="width: 220px"></ui-json>
             </template>
