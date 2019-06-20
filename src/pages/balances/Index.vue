@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ex-table :tableData="mixTableData" @refetch="fetchData" tableType="expand">
+    <ex-table :tableData="mixTableData" @refetch="fetchData">
       <template slot="search-bar-item" slot-scope="{search}">
         <el-form-item :label="search.label" :key="search.key" v-if="search.key=='q_balance_trade_symbols_cus_enabled_or_balance_plans_enabled_or_balance_smarts_enabled_in_any'">
           <ex-options-select v-model="mixTableData.query[search.key]" multiple :options="[{label: '已开启', value: true}, {label: '未开启', value: false}]" placeholder="请选择交易是否已开启"></ex-options-select>
@@ -10,24 +10,24 @@
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
       <!--折叠table-->
-      <template slot="expand" slot-scope="{row, $index, intro}">
-        <el-table :data="row.balance_trade_symbols" style="width: 100%">
-          <el-table-column prop="id" label="#"></el-table-column>
-          <el-table-column prop="trade_symbol" label="trade_symbol" width="320">
-            <template slot-scope="{row}">
-              <ui-json :json="row.trade_symbol" style="width: 100%"></ui-json>
-            </template>
-          </el-table-column>
-          <el-table-column prop="cus_buy_price" label="购买价格"></el-table-column>
-          <el-table-column prop="cus_sell_price" label="卖出价格"></el-table-column>
-          <el-table-column prop="cus_count" label="个数"></el-table-column>
-          <el-table-column prop="enabled" label="enabled">
-            <template slot-scope="scope">
-              <span>{{scope.row.cus_enabled ? 'true' : ''}}</span>
-            </template>
-          </el-table-column>
-        </el-table>
-      </template>
+      <!--<template slot="expand" slot-scope="{row, $index, intro}">-->
+        <!--<el-table :data="row.balance_trade_symbols" style="width: 100%">-->
+          <!--<el-table-column prop="id" label="#"></el-table-column>-->
+          <!--<el-table-column prop="trade_symbol" label="trade_symbol" width="400">-->
+            <!--<template slot-scope="{row}">-->
+              <!--<ui-json :json="row.trade_symbol"></ui-json>-->
+            <!--</template>-->
+          <!--</el-table-column>-->
+          <!--<el-table-column prop="cus_buy_price" label="购买价格"></el-table-column>-->
+          <!--<el-table-column prop="cus_sell_price" label="卖出价格"></el-table-column>-->
+          <!--<el-table-column prop="cus_count" label="个数"></el-table-column>-->
+          <!--<el-table-column prop="enabled" label="enabled">-->
+            <!--<template slot-scope="scope">-->
+              <!--<span>{{scope.row.cus_enabled ? 'true' : ''}}</span>-->
+            <!--</template>-->
+          <!--</el-table-column>-->
+        <!--</el-table>-->
+      <!--</template>-->
 
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)">{{row.id}}</el-button>
