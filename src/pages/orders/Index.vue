@@ -43,9 +43,9 @@
         <ex-status-tag type="info" v-else-if="row.state == 'canceled'">已撤销</ex-status-tag>
       </template>
       <template slot="price" slot-scope="{row}">
-        <el-tag>{{row.price}}</el-tag>
-        <!--<ex-status-tag type="success" v-if="row.ctype == 'buy-limit'">{{row.price}}</ex-status-tag>-->
-        <!--<ex-status-tag type="danger" v-if="row.ctype == 'sell-limit'">{{row.price}}</ex-status-tag>-->
+        <ex-status-tag type="success" v-if="row.ctype == 'buy-limit'">{{row.price}}</ex-status-tag>
+        <ex-status-tag type="danger" v-else-if="row.ctype == 'sell-limit'">{{row.price}}</ex-status-tag>
+        <el-tag v-else>{{row.price}}</el-tag>
       </template>
       <template slot="finish_time" slot-scope="{row}">
         {{row.finish_time.match('1970') ? '' : row.finish_time}}
