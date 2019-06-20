@@ -9,34 +9,14 @@
       <div slot="search-bar-operations">
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
-      <!--折叠table-->
-      <!--<template slot="expand" slot-scope="{row, $index, intro}">-->
-        <!--<el-table :data="row.balance_trade_symbols" style="width: 100%">-->
-          <!--<el-table-column prop="id" label="#"></el-table-column>-->
-          <!--<el-table-column prop="trade_symbol" label="trade_symbol" width="400">-->
-            <!--<template slot-scope="{row}">-->
-              <!--<ui-json :json="row.trade_symbol"></ui-json>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column prop="cus_buy_price" label="购买价格"></el-table-column>-->
-          <!--<el-table-column prop="cus_sell_price" label="卖出价格"></el-table-column>-->
-          <!--<el-table-column prop="cus_count" label="个数"></el-table-column>-->
-          <!--<el-table-column prop="enabled" label="enabled">-->
-            <!--<template slot-scope="scope">-->
-              <!--<span>{{scope.row.cus_enabled ? 'true' : ''}}</span>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-        <!--</el-table>-->
-      <!--</template>-->
-
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)">{{row.id}}</el-button>
       </template>
-      <template slot="enabled_items" slot-scope="{row}">
-        <ui-json :json="row.enabled_items"></ui-json>
-      </template>
       <template slot="currency" slot-scope="{row}">
-        {{row.currency.toUpperCase()}}
+        <el-popover placement="right" width="500" trigger="hover">
+          <ui-json :json="row.enabled_items"></ui-json>
+          <div slot="reference">{{row.currency.toUpperCase()}}</div>
+        </el-popover>
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-popover placement="top-start" width="200" trigger="hover" content="设置买入和卖出的固定价格，循环往复">
@@ -120,10 +100,6 @@ export default {
         },
         width: 300
       }, */{
-        label: '纳入信息',
-        key: 'enabled_items',
-        width: 350
-      }, {
         label: '冻结',
         key: 'frozen_balance',
         sortable: 'frozen_balance'
