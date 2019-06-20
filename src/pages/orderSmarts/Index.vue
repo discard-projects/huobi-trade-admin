@@ -67,7 +67,7 @@ export default {
       dataIntros: [{
         label: '#',
         key: 'id',
-        width: 120
+        width: 150
       }, {
         label: '交易对',
         key: 'full_coin_name'

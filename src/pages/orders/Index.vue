@@ -125,7 +125,7 @@
         dataIntros: [{
           label: '#',
           key: 'id',
-          width: 120
+          width: 150
         }, {
           label: '下单方式',
           key: 'kind',

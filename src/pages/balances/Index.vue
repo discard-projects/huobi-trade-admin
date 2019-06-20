@@ -97,7 +97,7 @@
         dataIntros: [{
           label: '#',
           key: 'id',
-          width: 80
+          width: 100
         }, {
           label: '目标币种',
           key: 'currency'
