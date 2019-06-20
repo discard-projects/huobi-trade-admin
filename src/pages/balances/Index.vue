@@ -12,11 +12,8 @@
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)">{{row.id}}</el-button>
       </template>
-      <template slot="currency" slot-scope="{row}">
-        <el-popover placement="right" width="500" trigger="hover">
-          <ui-json :json="row.enabled_items"></ui-json>
-          <div slot="reference">{{row.currency.toUpperCase()}}</div>
-        </el-popover>
+      <template slot="currency" slot-scope="{row, $index, intro}">
+        <div style="color: #409EFF; font-weight: 500" @click="previewDialog(row)">{{row.currency.toUpperCase()}}</div>
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-popover placement="top-start" width="200" trigger="hover" content="设置买入和卖出的固定价格，循环往复">
@@ -43,11 +40,13 @@ import mixTableData from '@/mixins/mixTableData'
 import CustomPriceForm from './CustomPriceForm.vue'
 import PlanPriceForm from './PlanPriceForm.vue'
 import SmartPriceForm from './SmartPriceForm.vue'
+import ExDialogJson from '@/components/ex-element/Dialog/ExDialogJson'
 export default {
   mixins: [mixTableData],
   data () {
     return {
-      footprints: []
+      footprints: [],
+      dialogVisible: true
     }
   },
   methods: {
@@ -72,6 +71,9 @@ export default {
       this.api.getBalanceTradeSymbols(item.id).then(res => {
         this.footprints = res.data.items
       })
+    },
+    previewDialog (row) {
+      this.$ext.mount(ExDialogJson, { props: { title: row.currency.toUpperCase(), json: row.enabled_items }})
     }
   },
   created () {
