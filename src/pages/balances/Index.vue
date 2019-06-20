@@ -129,7 +129,7 @@
         }],
         opIntro: {
           label: '操作',
-          width: 375
+          width: 400
         }
       })
     }

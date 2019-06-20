@@ -15,12 +15,12 @@
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
       <template slot="category" slot-scope="{row}">
-        <ex-status-tag type="primary" v-if="row.category == 'category_buy'">买入</ex-status-tag>
-        <ex-status-tag type="success" v-else-if="row.category == 'category_sell'">卖出</ex-status-tag>
+        <ex-status-tag type="success" v-if="row.category == 'category_buy'">买入</ex-status-tag>
+        <ex-status-tag type="danger" v-else-if="row.category == 'category_sell'">卖出</ex-status-tag>
       </template>
       <template slot="status" slot-scope="{row}">
-        <ex-status-tag type="info" v-if="row.status == 'status_trading'">交易中</ex-status-tag>
-        <ex-status-tag type="info" v-if="row.status == 'status_traded'">交易完成</ex-status-tag>
+        <ex-status-tag type="primary" v-if="row.status == 'status_trading'">交易中</ex-status-tag>
+        <ex-status-tag type="success" v-if="row.status == 'status_traded'">交易完成</ex-status-tag>
         <ex-status-tag type="info" v-if="row.status == 'status_closed'">已关闭</ex-status-tag>
       </template>
       <template slot="id" slot-scope="{row, $index, intro}">
@@ -67,7 +67,7 @@ export default {
       dataIntros: [{
         label: '#',
         key: 'id',
-        width: 80
+        width: 120
       }, {
         label: '交易对',
         key: 'full_coin_name'
