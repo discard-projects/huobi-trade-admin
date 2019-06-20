@@ -122,7 +122,7 @@ export default {
       }, */{
         label: '纳入信息',
         key: 'enabled_items',
-        width: 300
+        width: 350
       }, {
         label: '冻结',
         key: 'frozen_balance',
