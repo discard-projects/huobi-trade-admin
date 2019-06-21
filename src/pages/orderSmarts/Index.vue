@@ -8,7 +8,7 @@
         <el-form-item :label="search.label" :key="search.key" v-if="search.key == 'q_status_in_any'">
           <ex-options-select v-model="mixTableData.query[search.key]" :clearable="true"
                              :options="[{label: '交易中', value: 'status_trading'}, {label: '交易完成', value: 'status_traded'},
-                             {label: '已关闭', value: 'status_closed'}]" multiple placeholder="状态"></ex-options-select>
+                             {label: '已卖出', value: 'status_closed'}]" multiple placeholder="状态"></ex-options-select>
         </el-form-item>
       </template>
       <div slot="search-bar-operations">
@@ -21,7 +21,7 @@
       <template slot="status" slot-scope="{row}">
         <ex-status-tag type="primary" v-if="row.status == 'status_trading'">交易中</ex-status-tag>
         <ex-status-tag type="success" v-if="row.status == 'status_traded'">交易完成</ex-status-tag>
-        <ex-status-tag type="info" v-if="row.status == 'status_closed'">已关闭</ex-status-tag>
+        <ex-status-tag type="info" v-if="row.status == 'status_closed'">已卖出</ex-status-tag>
       </template>
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
