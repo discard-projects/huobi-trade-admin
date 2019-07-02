@@ -18,7 +18,7 @@
         </el-submenu>
       </template>
       <template v-else>
-        <router-link :to="{name: route.name}" :key="index" v-if="['Orders', 'OrderPlans', 'OrderSmarts', 'Balances', 'TradeSymbols'].indexOf(route.name) != -1">
+        <router-link :to="{name: route.name}" :key="index" v-if="['Orders', 'OrderIntervals', 'OrderPlans', 'OrderSmarts', 'Balances', 'TradeSymbols'].indexOf(route.name) != -1">
           <el-menu-item :index="route.name">
             <i class="el-icon-menu"></i>
             <span slot="title">{{route.meta.title}}</span>

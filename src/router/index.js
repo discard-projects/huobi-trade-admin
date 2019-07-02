@@ -19,15 +19,17 @@ Vue.router = new Router({
     }, {
       path: 'workers', name: 'Workers', meta: { title: 'Workers', icon: 'workers' }, component: (resolve) => { require(['@/pages/workers/Index'], resolve) },
     }, {
-      path: 'orders', name: 'Orders', meta: { title: 'Orders', icon: 'orders' }, component: (resolve) => { require(['@/pages/orders/Index'], resolve) },
+      path: 'tradeSymbols', name: 'TradeSymbols', meta: { title: 'TradeSymbols', icon: 'tradeSymbols' }, component: (resolve) => { require(['@/pages/tradeSymbols/Index'], resolve) },
     }, {
       path: 'balances', name: 'Balances', meta: { title: 'Balances', icon: 'balances' }, component: (resolve) => { require(['@/pages/balances/Index'], resolve) },
+    }, {
+      path: 'orderIntervals', name: 'OrderIntervals', meta: { title: 'OrderIntervals', icon: 'order_intervals' }, component: (resolve) => { require(['@/pages/orderIntervals/Index'], resolve) },
     }, {
       path: 'orderPlans', name: 'OrderPlans', meta: { title: 'OrderPlans', icon: 'order_Plans' }, component: (resolve) => { require(['@/pages/orderPlans/Index'], resolve) },
     }, {
       path: 'orderSmarts', name: 'OrderSmarts', meta: { title: 'OrderSmarts', icon: 'order_Smarts' }, component: (resolve) => { require(['@/pages/orderSmarts/Index'], resolve) },
     }, {
-      path: 'tradeSymbols', name: 'TradeSymbols', meta: { title: 'TradeSymbols', icon: 'tradeSymbols' }, component: (resolve) => { require(['@/pages/tradeSymbols/Index'], resolve) },
+      path: 'orders', name: 'Orders', meta: { title: 'Orders', icon: 'orders' }, component: (resolve) => { require(['@/pages/orders/Index'], resolve) },
     }, {
       path: 'dic', name: 'Dic', meta: {title: 'Dic'}, component: (resolve) => { require(['@/pages/dic/Index'], resolve) }, children: [
         { path: 'areas', name: 'DicAreas', meta: {title: 'Areas'}, component: (resolve) => { require(['@/pages/dic/areas/Index'], resolve) } },

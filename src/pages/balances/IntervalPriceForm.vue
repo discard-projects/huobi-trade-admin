@@ -18,7 +18,7 @@
           <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="{row}">
               <el-button size="mini" type="primary" :disabled="!row.enabled" @click="addTradeSymbol(row)">纳入</el-button>
-              <!--<el-button size="small" type="primary" :disabled="!row.enabled || form.balance_trade_symbols && form.balance_trade_symbols.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>-->
+              <!--<el-button size="small" type="primary" :disabled="!row.enabled || form.balance_intervals && form.balance_intervals.map(item => item.trade_symbol_id).indexOf(row.id) !== -1" @click="addTradeSymbol(row)">纳入</el-button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -27,24 +27,24 @@
         <h3>已纳入</h3>
         <el-form :inline="true" :model="form">
           <div style="max-height: 600px; overflow-y: auto; overflow-x: hidden">
-            <el-card v-for="(balaceTradeSymbol, index) in form.balance_trade_symbols" :key="index" style="margin-bottom: 10px">
+            <el-card v-for="(balanceInterval, index) in form.balance_intervals" :key="index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
-                <span class="fl">{{balaceTradeSymbol.trade_symbol_base_currency.toUpperCase()}} / {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span>
-                <span class="fr" style="color: #999" v-if="balaceTradeSymbol.rate">{{balaceTradeSymbol.rate.toFixed(10)}} % <span style="margin-left: 30px">利润：{{balaceTradeSymbol.profit.toFixed(10)}} {{balaceTradeSymbol.trade_symbol_quote_currency.toUpperCase()}}</span></span>
+                <span class="fl">{{balanceInterval.trade_symbol_base_currency.toUpperCase()}} / {{balanceInterval.trade_symbol_quote_currency.toUpperCase()}}</span>
+                <span class="fr" style="color: #999" v-if="balanceInterval.rate">{{balanceInterval.rate.toFixed(10)}} % <span style="margin-left: 30px">利润：{{balanceInterval.profit.toFixed(10)}} {{balanceInterval.trade_symbol_quote_currency.toUpperCase()}}</span></span>
               </div>
               <el-form-item class="el-form-margin" label="买入价格">
-                <el-input v-model="balaceTradeSymbol.cus_buy_price" placeholder="自定义购买价格"></el-input>
+                <el-input v-model="balanceInterval.buy_price" placeholder="自定义购买价格"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="卖出价格">
-                <el-input v-model="balaceTradeSymbol.cus_sell_price" placeholder="自定义卖出价格"></el-input>
+                <el-input v-model="balanceInterval.sell_price" placeholder="自定义卖出价格"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="数量">
-                <el-input v-model="balaceTradeSymbol.cus_count" placeholder="自定义购买数量" style="width: 130px"></el-input>
+                <el-input v-model="balanceInterval.amount" placeholder="自定义购买数量" style="width: 130px"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="启用">
-                <el-switch v-model="balaceTradeSymbol.cus_enabled"></el-switch>
+                <el-switch v-model="balanceInterval.enabled"></el-switch>
               </el-form-item>
-              <el-button class="fr" size="mini" type="danger" @click="deleteBalanceTradeSymbol(balaceTradeSymbol)">删除</el-button>
+              <el-button class="fr" size="mini" type="danger" @click="deleteBalanceInterval(balanceInterval)">删除</el-button>
             </el-card>
           </div>
           <el-form-item style="margin-top: 25px; width: 100%; text-align: right; margin-bottom: -10px">
@@ -67,30 +67,30 @@
       }
     },
     methods: {
-      balanceTradeSymbolAddRate (obj) {
+      balanceIntervalAddRate (obj) {
         Object.defineProperties(obj, {
           rate: {
             get () {
-              return this.cus_buy_price ? this.cus_sell_price / this.cus_buy_price * 100 : ''
+              return this.buy_price ? this.sell_price / this.buy_price * 100 : ''
             },
             set (nv) {
               if (+nv == nv) {
-                this.cus_sell_price = this.cus_buy_price * nv / 100
+                this.sell_price = this.buy_price * nv / 100
               }
             }
           },
           profit: {
             get () {
-              return this.cus_buy_price ? (this.cus_sell_price * this.cus_count * 0.998 - this.cus_buy_price * this.cus_count) - this.cus_count * 0.002 * this.cus_buy_price - this.cus_count * 0.998 * this.cus_sell_price * 0.002 : ''
+              return this.buy_price ? (this.sell_price * this.amount * 0.998 - this.buy_price * this.amount) - this.amount * 0.002 * this.buy_price - this.amount * 0.998 * this.sell_price * 0.002 : ''
             }
           }
         })
       },
       fetchData () {
         this._fetchData(this.api.getBalance(this.item.id)).then(res => {
-          this.form.balance_trade_symbols.forEach(obj => {
+          this.form.balance_intervals.forEach(obj => {
             this.$nextTick(() => {
-              this.balanceTradeSymbolAddRate(obj)
+              this.balanceIntervalAddRate(obj)
             })
           })
         })
@@ -101,28 +101,28 @@
         })
       },
       addTradeSymbol (tradeSymbol) {
-        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, cus_buy_price: 0, cus_sell_price: 0, cus_count: 0, cus_enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
-        this.balanceTradeSymbolAddRate(obj)
-        this.form.balance_trade_symbols.push(obj)
+        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, buy_price: 0, sell_price: 0, amount: 0, enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
+        this.balanceIntervalAddRate(obj)
+        this.form.balance_intervals.push(obj)
       },
-      deleteBalanceTradeSymbol (balanceTradeSymbol) {
-        if (balanceTradeSymbol.id) {
+      deleteBalanceInterval (balanceInterval) {
+        if (balanceInterval.id) {
           this.$confirm('此操作将删除该条数据, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.api.deleteBalanceTradeSymbol(balanceTradeSymbol.id).then(res => {
-              this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(balanceTradeSymbol), 1)
+            this.api.deleteBalanceInterval(balanceInterval.id).then(res => {
+              this.form.balance_intervals.splice(this.form.balance_intervals.indexOf(balanceInterval), 1)
             })
           })
         } else {
-          this.form.balance_trade_symbols.splice(this.form.balance_trade_symbols.indexOf(balanceTradeSymbol), 1)
+          this.form.balance_intervals.splice(this.form.balance_intervals.indexOf(balanceInterval), 1)
         }
       },
       onSubmit () {
-        let { balance_trade_symbols } = this.form
-        return this._handler(this.api.updateBalance(this.item.id, {balance_trade_symbols}))
+        let { balance_intervals } = this.form
+        return this._handler(this.api.updateBalance(this.item.id, {balance_intervals}))
       }
     },
     mounted () {

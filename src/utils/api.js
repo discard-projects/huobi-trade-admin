@@ -147,6 +147,10 @@ let api = {
   updateOrderStatus: (orderId, status) => cusAxios.put(`v1/orders/${orderId}/change_status`, {status}),
   createOrder (data) { return cusAxios.post(`v1/orders`, data) },
   deleteOrder: (id) => cusAxios.delete(`v1/orders/${id}`),
+  // order_intervals
+  getOrderIntervals (params) { return cusAxios.get('v1/order_intervals', {params}) },
+  getOrderIntervalFootprints: (id) => cusAxios.get(`v1/order_intervals/${id}/footprints`),
+  getOrderInterval (id, params) { return cusAxios.get(`v1/order_intervals/${id}`, {params}) },
   // order_plans
   getOrderPlans (params) { return cusAxios.get('v1/order_plans', {params}) },
   getOrderPlanFootprints: (id) => cusAxios.get(`v1/order_plans/${id}/footprints`),
@@ -160,8 +164,8 @@ let api = {
   getBalanceFootprints: (id) => cusAxios.get(`v1/balances/${id}/footprints`),
   getBalance (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
   updateBalance (id, data) { return cusAxios.put(`v1/balances/${id}`, data) },
-  deleteBalanceTradeSymbol: (balanceTradeSymbolId) => cusAxios.delete(`v1/balance_trade_symbols/${balanceTradeSymbolId}`),
-  getBalanceTradeSymbols (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
+  deleteBalanceInterval: (balanceIntervalId) => cusAxios.delete(`v1/balance_intervals/${balanceIntervalId}`),
+  // getBalanceTradeSymbols (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
   deleteBalancePlan: (balancePlanId) => cusAxios.delete(`v1/balance_plans/${balancePlanId}`),
   deleteBalanceSmart: (balanceSmartId) => cusAxios.delete(`v1/balance_smarts/${balanceSmartId}`),
   getBalancePlans (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },

@@ -16,8 +16,7 @@
       </template>
       <template slot="kind" slot-scope="{row}">
         <ex-status-tag type="info" v-if="row.kind == 'kind_app'">APP下单</ex-status-tag>
-        <ex-status-tag v-else-if="row.kind == 'kind_custom_price'">固定值下单</ex-status-tag>
-        <ex-status-tag type="success" v-else-if="row.kind == 'kind_auto'">自动下单</ex-status-tag>
+        <ex-status-tag v-else-if="row.kind == 'kind_interval'">固定值下单</ex-status-tag>
         <ex-status-tag type="success" v-else-if="row.kind == 'kind_plan'">计划下单</ex-status-tag>
         <ex-status-tag type="primary" v-else-if="row.kind == 'kind_smart'">智能下单</ex-status-tag>
       </template>
@@ -32,26 +31,24 @@
         <ex-status-tag v-if="row.status == 'status_created'">已提交</ex-status-tag>
         <ex-status-tag type="success" v-if="row.status == 'status_filled'">已成交</ex-status-tag>
         <ex-status-tag type="success" v-if="row.status == 'status_finished'">完成交易</ex-status-tag>
-        <ex-status-tag type="info" v-if="row.status == 'status_untracked'">停止追踪</ex-status-tag>
         <ex-status-tag type="danger" v-if="row.status == 'status_canceled'">已取消</ex-status-tag>
       </template>
-      <template slot="state" slot-scope="{row}">
-        <ex-status-tag type="info" v-if="row.state == 'submitted'">已提交</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.state == 'partial-filled'">部分成交</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.state == 'partial-canceled'">部分成交撤销</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.state == 'filled'">完全成交</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.state == 'canceled'">已撤销</ex-status-tag>
+      <template slot="hstate" slot-scope="{row}">
+        <ex-status-tag type="info" v-if="row.hstate == 'submitted'">已提交</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.hstate == 'partial-filled'">部分成交</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.hstate == 'partial-canceled'">部分成交撤销</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.hstate == 'filled'">完全成交</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.hstate == 'canceled'">已撤销</ex-status-tag>
       </template>
       <template slot="price" slot-scope="{row}">
         <ex-status-tag type="success" v-if="row.ctype == 'buy-limit'">{{row.price}}</ex-status-tag>
         <ex-status-tag type="danger" v-else-if="row.ctype == 'sell-limit'">{{row.price}}</ex-status-tag>
         <el-tag v-else>{{row.price}}</el-tag>
       </template>
-      <template slot="finish_time" slot-scope="{row}">
-        {{row.finish_time.match('1970') ? '' : row.finish_time}}
+      <template slot="hfinish_time" slot-scope="{row}">
+        {{row.hfinish_time.match('1970') ? '' : row.hfinish_time}}
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
-        <el-button v-if="row.kind === 'kind_custom_price' && ['status_filled'].indexOf(row.status) !== -1 && row.category === 'category_buy'" style="margin: 5px" size="mini" @click="stopTrack(row, 'status_untracked')">停止追踪卖出</el-button>
         <!--<el-button style="margin: 5px" size="mini" @click="showEditDialog(row)">撤单</el-button>-->
       </template>
     </ex-table>
@@ -87,19 +84,19 @@
       showDetailDialog (item) {
         this.$ext.mount(Show, {onEl: this.$el, props: {item}, data: {owner: this}})
       },
-      stopTrack (item, status) {
-        this.$confirm('停止追踪将会把设定价格交易关闭，需要手动打开，请确认？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          callback: action => {
-            if (action === 'confirm') {
-              this.api.updateOrderStatus(item.id, status).then(res => {
-                item.status = status
-              })
-            }
-          }
-        })
-      },
+      // stopTrack (item, status) {
+      //   this.$confirm('停止追踪将会把设定价格交易关闭，需要手动打开，请确认？', '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',
+      //     callback: action => {
+      //       if (action === 'confirm') {
+      //         this.api.updateOrderStatus(item.id, status).then(res => {
+      //           item.status = status
+      //         })
+      //       }
+      //     }
+      //   })
+      // },
       updateOrderStatus (order, status) {
         this.$confirm('确定更改吗？', '提示', {
           confirmButtonText: '确定',
@@ -145,7 +142,7 @@
           width: 100
         }, {
           label: '三方交易状态',
-          key: 'state',
+          key: 'hstate',
           width: 120
         }, {
           label: '数量',
@@ -165,11 +162,11 @@
           width: 100
         }, {
           label: '创建时间',
-          key: 'create_time',
+          key: 'hcreate_time',
           width: 140
         }, {
           label: '交易完成时间',
-          key: 'finish_time',
+          key: 'hfinish_time',
           width: 140
         }],
         opIntro: {
