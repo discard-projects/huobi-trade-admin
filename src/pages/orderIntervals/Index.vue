@@ -9,6 +9,10 @@
       <div slot="search-bar-operations">
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
+      <template slot="id" slot-scope="{row, $index, intro}">
+        <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
+        <el-button type="text" @click="showDetailDialog(row)">{{row.id}}</el-button>
+      </template>
       <template slot="category" slot-scope="{row}">
         <ex-status-tag type="success" v-if="row.category == 'category_buy'">买入</ex-status-tag>
         <ex-status-tag type="danger" v-if="row.category == 'category_sell'">卖出</ex-status-tag>
@@ -19,10 +23,6 @@
         <ex-status-tag v-else-if="row.status == 'status_traded'">交易完成</ex-status-tag>
         <ex-status-tag type="info" v-else-if="row.status == 'status_closed'">已关闭</ex-status-tag>
         <ex-status-tag type="info" v-else-if="row.status == 'status_canceled'">已取消</ex-status-tag>
-      </template>
-      <template slot="id" slot-scope="{row, $index, intro}">
-        <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
-        <el-button type="text" @click="showDetailDialog(row)">{{row.id}}</el-button>
       </template>
     </ex-table>
   </div>
@@ -61,7 +61,7 @@ export default {
       dataIntros: [{
         label: '#',
         key: 'id',
-        width: 110
+        width: 140
       }, {
         label: '交易对',
         key: 'full_coin_name'
