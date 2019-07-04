@@ -35,13 +35,19 @@
               <el-form-item class="el-form-margin" label="起始买入价格">
                 <el-input v-model="balanceSmart.open_price" placeholder="起始买入价格"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="下跌买入间隔">
-                <el-input v-model="balanceSmart.interval_price" placeholder="下跌买入间隔"></el-input>
-              </el-form-item>
               <el-form-item class="el-form-margin" label="起始买入数量">
-                <el-input v-model="balanceSmart.count" placeholder="起始买入数量"></el-input>
+                <el-input v-model="balanceSmart.amount" placeholder="起始买入数量"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="盈利百分比数">
+              <el-form-item class="el-form-margin" label="买入百分比">
+                <el-input v-model="balanceSmart.buy_percent" placeholder="如: 3 代表下跌 3%买入"></el-input>
+              </el-form-item>
+              <el-form-item class="el-form-margin" label="买入比率">
+                <el-input v-model="balanceSmart.rate_amount" placeholder="1.1代表上次买入个数的1.1倍"></el-input>
+              </el-form-item>
+              <el-form-item class="el-form-margin" label="最大买入量">
+                <el-input v-model="balanceSmart.max_amount" placeholder="最大买入量"></el-input>
+              </el-form-item>
+              <el-form-item class="el-form-margin" label="盈利百分比">
                 <el-input v-model="balanceSmart.sell_percent" type="number" placeholder="如：3 代表盈利 3% 卖出"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="启用">
