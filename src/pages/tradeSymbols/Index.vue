@@ -12,7 +12,7 @@
         <ex-status-tag type="danger" v-if="!row.enabled">不可下单</ex-status-tag>
       </template>
       <template slot="table-operations" slot-scope="{row, $index, intro}">
-        <el-button style="margin: 5px" size="mini" @click="updateTradeSymbols(row)" :disabled="!row.is_manager">{{row.enabled ? '停止': '启用'}}</el-button>
+        <el-button style="margin: 5px" size="mini" @click="updateTradeSymbols(row)" :disabled="row.include_users.length && row.enabled">{{row.enabled ? '停止': '启用'}}</el-button>
       </template>
     </ex-table>
   </div>
@@ -32,11 +32,9 @@
         this._fetchData(this.api.getTradeSymbols(this.mixTableParams))
       },
       updateTradeSymbols (row) {
-        if (row.is_manager) {
-          this.api.updateTradeSymbols(row.id, { field: 'enabled' }).then(res => {
-            row.enabled = res.data.value
-          })
-        }
+        this.api.updateTradeSymbols(row.id, { field: 'enabled' }).then(res => {
+          row.enabled = res.data.value
+        })
       }
     },
     created () {
