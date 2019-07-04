@@ -22,6 +22,7 @@
         <ex-status-tag type="primary" v-if="row.status == 'status_trading'">交易中</ex-status-tag>
         <ex-status-tag type="success" v-if="row.status == 'status_traded'">交易完成</ex-status-tag>
         <ex-status-tag type="info" v-if="row.status == 'status_closed'">已卖出</ex-status-tag>
+        <ex-status-tag type="info" v-if="row.status == 'status_canceled'">已取消</ex-status-tag>
       </template>
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
@@ -76,10 +77,10 @@ export default {
         key: 'price'
       }, {
         label: '数量',
-        key: 'count'
+        key: 'amount'
       }, {
         label: '真实数量',
-        key: 'real_count'
+        key: 'resolve_amount'
       }, {
         label: '总价格',
         key: 'total_price'

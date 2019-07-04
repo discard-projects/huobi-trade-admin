@@ -30,7 +30,7 @@
             <el-card v-for="(balanceSmart, index) in form.balance_smarts" :key="index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
                 <span class="fl">{{balanceSmart.trade_symbol.base_currency.toUpperCase()}} / {{balanceSmart.trade_symbol.quote_currency.toUpperCase()}}</span>
-                <span class="fr" style="color: #999" v-if="balanceSmart.rate">每下跌【{{balanceSmart.rate.toFixed(10)}}%】买入上次两倍个数</span>
+                <span class="fr" style="color: #999" v-if="balanceSmart.profit">约收益【{{balanceSmart.profit.toFixed(10)}}%】</span>
               </div>
               <el-form-item class="el-form-margin" label="起始买入价格">
                 <el-input v-model="balanceSmart.open_price" placeholder="起始买入价格"></el-input>
@@ -38,10 +38,10 @@
               <el-form-item class="el-form-margin" label="起始买入数量">
                 <el-input v-model="balanceSmart.amount" placeholder="起始买入数量"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="买入百分比">
+              <el-form-item class="el-form-margin" label="下跌买入百分比">
                 <el-input v-model="balanceSmart.buy_percent" placeholder="如: 3 代表下跌 3%买入"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="买入比率">
+              <el-form-item class="el-form-margin" label="下跌买入比率">
                 <el-input v-model="balanceSmart.rate_amount" placeholder="1.1代表上次买入个数的1.1倍"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="最大买入量">
@@ -78,9 +78,9 @@
     methods: {
       balanceSmartAddRate (obj) {
         Object.defineProperties(obj, {
-          rate: {
+          profit: {
             get () {
-              return this.open_price ?  Number(this.interval_price) / this.open_price * 100 : ''
+              return this.open_price ?  this.open_price * this.amount * (this.sell_percent * 0.01 - 0.004) : ''
             },
             set (nv) {
               if (+nv == nv) {
@@ -105,7 +105,7 @@
         })
       },
       addBalanceSmart (tradeSymbol) {
-        let obj = {balance_id: this.item.id, range_begin_price: 0, range_end_price: 0, interval_price: 0, open_price: 0, count: 0, addition_count: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
+        let obj = {balance_id: this.item.id, open_price: 0, amount: 0, rate_amount: 0, max_amount: 0, buy_percent: 0, sell_percent: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
         this.balanceSmartAddRate(obj)
         this.form.balance_smarts.push(obj)
       },
