@@ -15,6 +15,10 @@
       <div slot="search-bar-operations">
         <footprint ref="footprintRef" @fetchItemFootprints="fetchItemFootprints" :footprints.sync="footprints"></footprint>
       </div>
+      <template slot="category" slot-scope="{row}">
+        <ex-status-tag type="success" v-if="row.category == 'category_buy'">买入</ex-status-tag>
+        <ex-status-tag type="danger" v-else-if="row.category == 'category_sell'">卖出</ex-status-tag>
+      </template>
       <template slot="status" slot-scope="{row}">
         <ex-status-tag type="success" v-if="row.status == 'status_buying'">买入中</ex-status-tag>
         <ex-status-tag v-else-if="row.status == 'status_buyed'">已买入</ex-status-tag>
@@ -74,14 +78,20 @@ export default {
         label: '买入价格',
         key: 'buy_price'
       }, {
+        label: '下单买入价格',
+        key: 'should_buy_price'
+      }, {
         label: '买入数量',
-        key: 'buy_count'
+        key: 'buy_amount'
       }, {
         label: '卖出价格',
         key: 'sell_price'
       }, {
         label: '卖出数量',
-        key: 'sell_count'
+        key: 'sell_amount'
+      }, {
+        label: '分类',
+        key: 'category'
       }, {
         label: '状态',
         key: 'status'

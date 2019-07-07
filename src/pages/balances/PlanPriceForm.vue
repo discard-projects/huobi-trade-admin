@@ -33,22 +33,22 @@
                 <span class="fr" style="color: #999" v-if="balancePlan.rate">{{balancePlan.rate.toFixed(10)}} %</span>
               </div>
               <el-form-item class="el-form-margin" label="区间起点">
-                <el-input v-model="balancePlan.range_begin_price" placeholder="区间起点价格"></el-input>
+                <el-input v-model="balancePlan.begin_price" placeholder="区间起点价格"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="区间终点">
-                <el-input v-model="balancePlan.range_end_price" placeholder="区间终点价格"></el-input>
-              </el-form-item>
-              <el-form-item class="el-form-margin" label="区间间隔">
-                <el-input v-model="balancePlan.interval_price" placeholder="自定义区间间隔"></el-input>
+                <el-input v-model="balancePlan.end_price" placeholder="区间终点价格"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="标杆价格">
                 <el-input v-model="balancePlan.open_price" placeholder="自定义初始价格"></el-input>
               </el-form-item>
+              <el-form-item class="el-form-margin" label="区间间隔">
+                <el-input v-model="balancePlan.interval_price" placeholder="自定义区间间隔"></el-input>
+              </el-form-item>
               <el-form-item class="el-form-margin" label="固定数量">
-                <el-input v-model="balancePlan.count" placeholder="自定义固定数量"></el-input>
+                <el-input v-model="balancePlan.amount" placeholder="自定义固定数量"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="间隔追加数量">
-                <el-input v-model="balancePlan.addition_count" placeholder="自定义间隔追加数量" style="width: 150px"></el-input>
+                <el-input v-model="balancePlan.addition_amount" placeholder="自定义间隔追加数量" style="width: 150px"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="启用">
                 <el-switch v-model="balancePlan.enabled"></el-switch>
@@ -80,7 +80,7 @@
         Object.defineProperties(obj, {
           rate: {
             get () {
-              return this.open_price ? (Number(this.open_price) + Number(this.interval_price)) / this.open_price * 100 : ''
+              return this.open_price ? Number(this.interval_price) / this.open_price * 100 : ''
             },
             set (nv) {
               if (+nv == nv) {
@@ -105,7 +105,7 @@
         })
       },
       addBalancePlan (tradeSymbol) {
-        let obj = {balance_id: this.item.id, range_begin_price: 0, range_end_price: 0, interval_price: 0, open_price: 0, count: 0, addition_count: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
+        let obj = {balance_id: this.item.id, begin_price: 0, end_price: 0, interval_price: 0, open_price: 0, amount: 0, addition_amount: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
         this.balancePlanAddRate(obj)
         this.form.balance_plans.push(obj)
       },
