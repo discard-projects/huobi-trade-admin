@@ -33,13 +33,13 @@
         <ex-status-tag type="success" v-if="row.status == 'status_finished'">完成交易</ex-status-tag>
         <ex-status-tag type="danger" v-if="row.status == 'status_canceled'">已取消</ex-status-tag>
       </template>
-      <template slot="hstate" slot-scope="{row}">
-        <ex-status-tag type="info" v-if="row.hstate == 'submitted'">已提交</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.hstate == 'partial-filled'">部分成交</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.hstate == 'partial-canceled'">部分成交撤销</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.hstate == 'filled'">完全成交</ex-status-tag>
-        <ex-status-tag type="info" v-else-if="row.hstate == 'canceled'">已撤销</ex-status-tag>
-      </template>
+      <!--<template slot="hstate" slot-scope="{row}">-->
+        <!--<ex-status-tag type="info" v-if="row.hstate == 'submitted'">已提交</ex-status-tag>-->
+        <!--<ex-status-tag type="info" v-else-if="row.hstate == 'partial-filled'">部分成交</ex-status-tag>-->
+        <!--<ex-status-tag type="info" v-else-if="row.hstate == 'partial-canceled'">部分成交撤销</ex-status-tag>-->
+        <!--<ex-status-tag type="info" v-else-if="row.hstate == 'filled'">完全成交</ex-status-tag>-->
+        <!--<ex-status-tag type="info" v-else-if="row.hstate == 'canceled'">已撤销</ex-status-tag>-->
+      <!--</template>-->
       <template slot="price" slot-scope="{row}">
         <ex-status-tag type="success" v-if="row.ctype == 'buy-limit'">{{row.price}}</ex-status-tag>
         <ex-status-tag type="danger" v-else-if="row.ctype == 'sell-limit'">{{row.price}}</ex-status-tag>
