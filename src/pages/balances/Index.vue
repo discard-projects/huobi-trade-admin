@@ -2,7 +2,7 @@
   <div>
     <ex-table :tableData="mixTableData" @refetch="fetchData">
       <template slot="search-bar-item" slot-scope="{search}">
-        <el-form-item :label="search.label" :key="search.key" v-if="search.key=='q_balance_intervals_enabled_or_balance_smarts_enabled_or_balance_plans_enabled_in_any'">
+        <el-form-item :label="search.label" :key="search.key" v-if="search.key=='q_balance_intervals_enabled_or_balance_smarts_enabled_or_balance_plans_enabled_or_balance_rages_enabled_in_any'">
           <ex-options-select v-model="mixTableData.query[search.key]" multiple :options="[{label: '已开启', value: true}, {label: '未开启', value: false}]" placeholder="请选择交易是否已开启"></ex-options-select>
         </el-form-item>
       </template>
@@ -19,7 +19,7 @@
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-popover placement="top-start" width="200" trigger="hover" content="设置买入和卖出的固定价格，循环往复">
           <el-button slot="reference" size="small" @click="showIntervalPriceFormDialog(row)">
-            固定值交易[<span class="number-text">{{row.enabled_items['固定值交易'].filter(item => item.enabled).length}}</span>]
+            固定交易[<span class="number-text">{{row.enabled_items['固定值交易'].filter(item => item.enabled).length}}</span>]
           </el-button>
         </el-popover>
         <el-popover placement="top-start" width="410" trigger="hover"
@@ -37,6 +37,12 @@
             智能交易[<span class="number-text">{{row.enabled_items['智能交易'].filter(item => item.enabled).length}}</span>]
           </el-button>
         </el-popover>
+        <el-popover placement="top-start" width="400" trigger="hover"
+                    content="用于新币购买，狂暴挂单">
+          <el-button slot="reference" size="small" @click="showRagePriceFormDialog(row)">
+            新币交易[<span class="number-text">{{row.enabled_items['新币交易'].filter(item => item.enabled).length}}</span>]
+          </el-button>
+        </el-popover>
       </template>
     </ex-table>
   </div>
@@ -47,6 +53,7 @@
   import IntervalPriceForm from './IntervalPriceForm.vue'
   import PlanPriceForm from './PlanPriceForm.vue'
   import SmartPriceForm from './SmartPriceForm.vue'
+  import RagePriceForm from './RagePriceForm.vue'
   import Show from './Show.vue'
   import ExDialogJson from '@/components/ex-element/Dialog/ExDialogJson'
   export default {
@@ -70,6 +77,9 @@
       showSmartPriceFormDialog (item) {
         this.$ext.mount(SmartPriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
       },
+      showRagePriceFormDialog (item) {
+        this.$ext.mount(RagePriceForm, {onEl: this.$el, props: {item}, data: {owner: this}})
+      },
       showDetailDialog (item) {
         this.$ext.mount(Show, {onEl: this.$el, props: {item}, data: {owner: this}})
       },
@@ -90,14 +100,14 @@
     created () {
       this.mixTableData = Object.assign(this.mixTableData, {
         query: {
-          q_balance_intervals_enabled_or_balance_smarts_enabled_or_balance_plans_enabled_in_any: [true, false]
+          q_balance_intervals_enabled_or_balance_smarts_enabled_or_balance_plans_enabled_or_balance_rages_enabled_in_any: [true, false]
         },
         queryIntros: [{
           control: 'input',
           key: 'q_currency_cont'
         }, {
           control: 'custom',
-          key: 'q_balance_intervals_enabled_or_balance_smarts_enabled_or_balance_plans_enabled_in_any'
+          key: 'q_balance_intervals_enabled_or_balance_smarts_enabled_or_balance_plans_enabled_or_balance_rages_enabled_in_any'
         }],
         dataIntros: [{
           label: '#',
@@ -134,7 +144,7 @@
         }],
         opIntro: {
           label: '操作',
-          width: 400
+          width: 260
         }
       })
     }
