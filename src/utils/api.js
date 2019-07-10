@@ -169,6 +169,7 @@ let api = {
   getBalance (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
   updateBalance (id, data) { return cusAxios.put(`v1/balances/${id}`, data) },
   deleteBalanceInterval: (balanceIntervalId) => cusAxios.delete(`v1/balance_intervals/${balanceIntervalId}`),
+  deleteBalanceRage: (balanceIntervalId) => cusAxios.delete(`v1/balance_rages/${balanceIntervalId}`),
   // getBalanceTradeSymbols (id, params) { return cusAxios.get(`v1/balances/${id}`, {params}) },
   deleteBalancePlan: (balancePlanId) => cusAxios.delete(`v1/balance_plans/${balancePlanId}`),
   deleteBalanceSmart: (balanceSmartId) => cusAxios.delete(`v1/balance_smarts/${balanceSmartId}`),
