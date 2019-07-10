@@ -151,6 +151,10 @@ let api = {
   getOrderIntervals (params) { return cusAxios.get('v1/order_intervals', {params}) },
   getOrderIntervalFootprints: (id) => cusAxios.get(`v1/order_intervals/${id}/footprints`),
   getOrderInterval (id, params) { return cusAxios.get(`v1/order_intervals/${id}`, {params}) },
+  // order_rages
+  getOrderRages (params) { return cusAxios.get('v1/order_rages', {params}) },
+  getOrderRageFootprints: (id) => cusAxios.get(`v1/order_rages/${id}/footprints`),
+  getOrderRage (id, params) { return cusAxios.get(`v1/order_rages/${id}`, {params}) },
   // order_plans
   getOrderPlans (params) { return cusAxios.get('v1/order_plans', {params}) },
   getOrderPlanFootprints: (id) => cusAxios.get(`v1/order_plans/${id}/footprints`),

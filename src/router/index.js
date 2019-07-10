@@ -25,6 +25,8 @@ Vue.router = new Router({
     }, {
       path: 'orderIntervals', name: 'OrderIntervals', meta: { title: 'OrderIntervals', icon: 'order_intervals' }, component: (resolve) => { require(['@/pages/orderIntervals/Index'], resolve) },
     }, {
+      path: 'orderRages', name: 'OrderRages', meta: { title: 'OrderRages', icon: 'order_rages' }, component: (resolve) => { require(['@/pages/orderRages/Index'], resolve) },
+    }, {
       path: 'orderPlans', name: 'OrderPlans', meta: { title: 'OrderPlans', icon: 'order_Plans' }, component: (resolve) => { require(['@/pages/orderPlans/Index'], resolve) },
     }, {
       path: 'orderSmarts', name: 'OrderSmarts', meta: { title: 'OrderSmarts', icon: 'order_Smarts' }, component: (resolve) => { require(['@/pages/orderSmarts/Index'], resolve) },
