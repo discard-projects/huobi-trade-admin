@@ -107,7 +107,7 @@
       addBalancePlan (tradeSymbol) {
         let obj = {balance_id: this.item.id, begin_price: 0, end_price: 0, interval_price: 0, open_price: 0, amount: 0, addition_amount: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
         this.balancePlanAddRate(obj)
-        this.form.balance_plans.push(obj)
+        this.form.balance_plans.unshift(obj)
       },
       deleteBalancePlan (balancePlan) {
         if (balancePlan.id) {

@@ -107,7 +107,7 @@
       addBalanceSmart (tradeSymbol) {
         let obj = {balance_id: this.item.id, open_price: 0, amount: 0, rate_amount: 0, max_amount: 0, buy_percent: 0, sell_percent: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
         this.balanceSmartAddRate(obj)
-        this.form.balance_smarts.push(obj)
+        this.form.balance_smarts.unshift(obj)
       },
       deleteBalanceSmart (balanceSmart) {
         if (balanceSmart.id) {

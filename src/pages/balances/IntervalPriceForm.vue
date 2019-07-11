@@ -103,7 +103,7 @@
       addTradeSymbol (tradeSymbol) {
         let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, buy_price: 0, sell_price: 0, amount: 0, enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
         this.balanceIntervalAddRate(obj)
-        this.form.balance_intervals.push(obj)
+        this.form.balance_intervals.unshift(obj)
       },
       deleteBalanceInterval (balanceInterval) {
         if (balanceInterval.id) {
