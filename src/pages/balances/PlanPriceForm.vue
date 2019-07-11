@@ -27,7 +27,7 @@
         <h3>已纳入</h3>
         <el-form :inline="true" :model="form">
           <div style="max-height: 600px; overflow-y: auto; overflow-x: hidden">
-            <el-card v-for="(balancePlan, index) in form.balance_plans" :key="index" style="margin-bottom: 10px">
+            <el-card v-for="(balancePlan, index) in form.balance_plans" :key="form.balance_plans.length - index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
                 <span class="fl">{{balancePlan.trade_symbol.base_currency.toUpperCase()}} / {{balancePlan.trade_symbol.quote_currency.toUpperCase()}}</span>
                 <span class="fr" style="color: #999" v-if="balancePlan.rate">{{balancePlan.rate.toFixed(10)}} %</span>

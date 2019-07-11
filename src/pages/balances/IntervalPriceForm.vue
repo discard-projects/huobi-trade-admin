@@ -27,7 +27,7 @@
         <h3>已纳入</h3>
         <el-form :inline="true" :model="form">
           <div style="max-height: 600px; overflow-y: auto; overflow-x: hidden">
-            <el-card v-for="(balanceInterval, index) in form.balance_intervals" :key="index" style="margin-bottom: 10px">
+            <el-card v-for="(balanceInterval, index) in form.balance_intervals" :key="form.balance_intervals.length - index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
                 <span class="fl">{{balanceInterval.trade_symbol_base_currency.toUpperCase()}} / {{balanceInterval.trade_symbol_quote_currency.toUpperCase()}}</span>
                 <span class="fr" style="color: #999" v-if="balanceInterval.rate">{{balanceInterval.rate.toFixed(10)}} % <span style="margin-left: 30px">利润：{{balanceInterval.profit.toFixed(10)}} {{balanceInterval.trade_symbol_quote_currency.toUpperCase()}}</span></span>
