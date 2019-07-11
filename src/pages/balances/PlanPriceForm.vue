@@ -27,7 +27,7 @@
         <h3>已纳入</h3>
         <el-form :inline="true" :model="form">
           <div style="max-height: 600px; overflow-y: auto; overflow-x: hidden">
-            <el-card v-for="(balancePlan, index) in form.balance_plans" :key="form.balance_plans.length - index" style="margin-bottom: 10px">
+            <el-card v-for="(balancePlan, index) in form.balance_plans" :key="index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
                 <span class="fl">{{balancePlan.trade_symbol.base_currency.toUpperCase()}} / {{balancePlan.trade_symbol.quote_currency.toUpperCase()}}</span>
                 <span class="fr" style="color: #999" v-if="balancePlan.rate">{{balancePlan.rate.toFixed(10)}} %</span>
@@ -107,7 +107,7 @@
       addBalancePlan (tradeSymbol) {
         let obj = {balance_id: this.item.id, begin_price: 0, end_price: 0, interval_price: 0, open_price: 0, amount: 0, addition_amount: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
         this.balancePlanAddRate(obj)
-        this.form.balance_plans.unshift(obj)
+        this.form.balance_plans.push(obj)
       },
       deleteBalancePlan (balancePlan) {
         if (balancePlan.id) {

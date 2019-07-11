@@ -27,7 +27,7 @@
         <h3>已纳入</h3>
         <el-form :inline="true" :model="form">
           <div style="max-height: 600px; overflow-y: auto; overflow-x: hidden">
-            <el-card v-for="(balanceSmart, index) in form.balance_smarts" :key="form.balance_smarts.length - index" style="margin-bottom: 10px">
+            <el-card v-for="(balanceSmart, index) in form.balance_smarts" :key="index" style="margin-bottom: 10px">
               <div slot="header" class="clearfisx" style="margin-bottom: 15px">
                 <span class="fl">{{balanceSmart.trade_symbol.base_currency.toUpperCase()}} / {{balanceSmart.trade_symbol.quote_currency.toUpperCase()}}</span>
                 <span class="fr" style="color: #999" v-if="balanceSmart.profit">约收益【{{balanceSmart.trade_symbol.quote_currency.toUpperCase()}} {{balanceSmart.profit.toFixed(10)}}】</span>
@@ -107,7 +107,7 @@
       addBalanceSmart (tradeSymbol) {
         let obj = {balance_id: this.item.id, open_price: 0, amount: 0, rate_amount: 0, max_amount: 0, buy_percent: 0, sell_percent: 0, trade_symbol_id: tradeSymbol.id, enabled: false, trade_symbol: tradeSymbol}
         this.balanceSmartAddRate(obj)
-        this.form.balance_smarts.unshift(obj)
+        this.form.balance_smarts.push(obj)
       },
       deleteBalanceSmart (balanceSmart) {
         if (balanceSmart.id) {
