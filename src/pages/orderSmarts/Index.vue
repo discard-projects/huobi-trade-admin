@@ -19,10 +19,11 @@
         <ex-status-tag type="danger" v-else-if="row.category == 'category_sell'">卖出</ex-status-tag>
       </template>
       <template slot="status" slot-scope="{row}">
-        <ex-status-tag type="primary" v-if="row.status == 'status_trading'">交易中</ex-status-tag>
-        <ex-status-tag type="success" v-if="row.status == 'status_traded'">交易完成</ex-status-tag>
-        <ex-status-tag type="info" v-if="row.status == 'status_closed'">已卖出</ex-status-tag>
-        <ex-status-tag type="info" v-if="row.status == 'status_canceled'">已取消</ex-status-tag>
+        <ex-status-tag type="success" v-if="row.status == 'status_created'">已创建</ex-status-tag>
+        <ex-status-tag v-else-if="row.status == 'status_trading'">交易中</ex-status-tag>
+        <ex-status-tag v-else-if="row.status == 'status_traded'">交易完成</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.status == 'status_closed'">已关闭</ex-status-tag>
+        <ex-status-tag type="info" v-else-if="row.status == 'status_canceled'">已取消</ex-status-tag>
       </template>
       <template slot="id" slot-scope="{row, $index, intro}">
         <el-button type="text" @click="$refs['footprintRef'].showDialog(row)" icon="el-icon-time"></el-button>
