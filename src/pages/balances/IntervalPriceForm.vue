@@ -35,11 +35,14 @@
               <el-form-item class="el-form-margin" label="买入价格">
                 <el-input v-model="balanceInterval.buy_price" placeholder="自定义购买价格"></el-input>
               </el-form-item>
-              <el-form-item class="el-form-margin" label="卖出价格">
+              <el-form-item class="el-form-margin" label="卖出价格" v-if="!balanceInterval.custom_sell_enabled">
                 <el-input v-model="balanceInterval.sell_price" placeholder="自定义卖出价格"></el-input>
               </el-form-item>
               <el-form-item class="el-form-margin" label="数量">
                 <el-input v-model="balanceInterval.amount" placeholder="自定义购买数量" style="width: 130px"></el-input>
+              </el-form-item>
+              <el-form-item class="el-form-margin" label="是否手动卖出">
+                <el-switch v-model="balanceInterval.custom_sell_enabled"></el-switch>
               </el-form-item>
               <el-form-item class="el-form-margin" label="启用">
                 <el-switch v-model="balanceInterval.enabled"></el-switch>
@@ -101,7 +104,7 @@
         })
       },
       addTradeSymbol (tradeSymbol) {
-        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, buy_price: 0, sell_price: 0, amount: 0, enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
+        let obj = {balance_id: this.item.id, trade_symbol_id: tradeSymbol.id, buy_price: 0, sell_price: 0, amount: 0, enabled: false, custom_sell_enabled: false, trade_symbol_base_currency: tradeSymbol.base_currency, trade_symbol_quote_currency: tradeSymbol.quote_currency}
         this.balanceIntervalAddRate(obj)
         this.form.balance_intervals.push(obj)
       },
