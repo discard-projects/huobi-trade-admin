@@ -9,6 +9,11 @@
               {{row.base_currency.toUpperCase()}} / {{row.quote_currency.toUpperCase()}}
             </template>
           </el-table-column>
+          <el-table-column prop="price" label="当前价格">
+            <template slot-scope="{row}">
+              {{row.current_price}}
+            </template>
+          </el-table-column>
           <el-table-column prop="enabled" label="开启状态">
             <template slot-scope="scope">
               <ex-status-tag type="success" v-if="scope.row.enabled">已开启</ex-status-tag>
