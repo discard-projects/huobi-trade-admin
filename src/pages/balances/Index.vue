@@ -19,7 +19,7 @@
       <template slot="table-operations" slot-scope="{row, $index, intro}">
         <el-popover placement="top-start" width="200" trigger="hover" content="设置买入和卖出的固定价格，循环往复">
           <el-button slot="reference" size="small" @click="showIntervalPriceFormDialog(row)">
-            固定值交易[<span class="number-text">{{row.enabled_items['固定值交易'].filter(item => item.enabled).length}}</span>]
+            固定值交易[<span :class="{'number-text': row.enabled_items['固定值交易'].filter(item => item.enabled).length}">{{row.enabled_items['固定值交易'].filter(item => item.enabled).length}}</span>]
           </el-button>
         </el-popover>
         <el-popover placement="top-start" width="410" trigger="hover"
@@ -27,14 +27,14 @@
                     到达某一节点价格，如果该节点已买入，则以该节点价格卖出低节点持有数量（可卖出的所有节点）；
                     如果未买入，则将持有的低于当前节点最近一个节点的数量卖给当前节点，并将其他可卖出节点卖出；如未持有低于当前节点最近一个节点则以当前节点价格挂单买入。">
           <el-button slot="reference" size="small" @click="showPlanPriceFormDialog(row)">
-            计划交易[<span class="number-text">{{row.enabled_items['计划交易'].filter(item => item.enabled).length}}</span>]
+            计划交易[<span :class="{'number-text': row.enabled_items['计划交易'].filter(item => item.enabled).length}">{{row.enabled_items['计划交易'].filter(item => item.enabled).length}}</span>]
           </el-button>
         </el-popover>
         <el-popover placement="top-start" width="400" trigger="hover"
                     content="以起始价格买入起始数量，如下跌规定间隔价格，则以两倍数量买入上一次买入数量；
                     当持有数量的平均价格达到规定盈利百分比则挂单卖出使其剩余 起始数量的一半，并以当前价格虚拟买入剩余数量且重新开始周期">
           <el-button slot="reference" size="small" @click="showSmartPriceFormDialog(row)">
-            智能交易[<span class="number-text">{{row.enabled_items['智能交易'].filter(item => item.enabled).length}}</span>]
+            智能交易[<span :class="{'number-text': row.enabled_items['智能交易'].filter(item => item.enabled).length}">{{row.enabled_items['智能交易'].filter(item => item.enabled).length}}</span>]
           </el-button>
         </el-popover>
       </template>
