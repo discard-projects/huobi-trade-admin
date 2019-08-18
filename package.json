@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "deploy-prod": "npm run build && scp -r ./dist/* root@104.199.175.127:/mnt/www/huobi/huobi-admin"
+    "deploy-prod": "npm run build && scp -r ./dist/* deploy@47.100.235.38:/mnt/www/huobi/huobi-admin"
   },
   "dependencies": {
     "@websanova/vue-auth": "^2.21.14-beta",
