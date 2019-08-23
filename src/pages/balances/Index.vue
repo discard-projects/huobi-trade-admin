@@ -3,7 +3,7 @@
     <ex-table :tableData="mixTableData" @refetch="fetchData">
       <template slot="search-bar-item" slot-scope="{search}">
         <el-form-item :label="search.label" :key="search.key" v-if="search.key=='q_balance_intervals_enabled_or_balance_smarts_enabled_or_balance_plans_enabled_in_any'">
-          <ex-options-select v-model="mixTableData.query[search.key]" multiple :options="[{label: '已开启', value: true}, {label: '未开启', value: false}]" placeholder="请选择交易是否已开启"></ex-options-select>
+          <ex-options-select v-model="mixTableData.query[search.key]" multiple :options="[{label: '已开启', value: true}, {label: '未开启', value: false}]" clearable placeholder="请选择交易是否已开启"></ex-options-select>
         </el-form-item>
       </template>
       <div slot="search-bar-operations">
