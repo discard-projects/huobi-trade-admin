@@ -14,7 +14,7 @@
   "dependencies": {
     "@websanova/vue-auth": "^2.21.14-beta",
     "activestorage": "^5.2.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "codemirror": "^5.42.0",
     "element-ui": "^2.4.6",
     "qrcode-reader": "^1.0.4",
