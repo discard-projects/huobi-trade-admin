@@ -29,7 +29,7 @@
     "vue-zujian": "^2.0.0",
     "vuep": "^0.8.1",
     "vuex": "^3.0.1",
-    "xlsx": "^0.13.5"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@epegzz/sass-vars-loader": "^3.4.0",
